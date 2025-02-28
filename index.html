@@ -1,53 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Your Name - Academic Website</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabin Subedi</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            margin: 0;
-            padding: 20px;
+            color: #333;
             max-width: 800px;
             margin: 0 auto;
+            padding: 0 20px;
         }
+        
+        header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
         h1 {
-            color: #333;
+            font-size: 2em;
+            margin-bottom: 0;
         }
-        .section {
+        
+        nav {
+            margin: 20px 0;
+        }
+        
+        nav a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .social-icons {
+            float: right;
+        }
+        
+        .social-icons a {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #777;
+        }
+        
+        .announcement {
+            background-color: #f8eaea;
+            border: 1px solid #e0c8c8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .profile {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .profile img {
+            width: 250px;
+            height: auto;
+        }
+        
+        .profile-content {
+            flex: 1;
+        }
+        
+        ul.research-list {
+            list-style-type: disc;
+            padding-left: 30px;
+        }
+        
+        .publications, .working-papers, .teaching {
+            margin: 40px 0;
+        }
+        
+        .publications h2, .working-papers h2, .teaching h2 {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        
+        .publication-item {
             margin-bottom: 30px;
+        }
+        
+        .publication-links a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #444;
+        }
+        
+        .course {
+            margin-bottom: 20px;
+        }
+        
+        .course-meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        a {
+            color: #2c5282;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Your Name</h1>
-        <p>Position • Department • University</p>
+        <div class="social-icons">
+            <a href="x.com/realsabinsubedi" title="Twitter">🐦</a>
+            <a href="#" title="GitHub">📂</a>
+            <a href="mailto:sabinsubedi.subedi@gmail.com" title="Email">📧</a>
+        </div>
+        <nav>
+            <a href="#papers">Papers</a>
+            <a href="#open-source">Open Source</a>
+            <a href="#teaching">Teaching</a>
+            <a href="#blog">Blog</a>
+        </nav>
     </header>
     
-    <div class="section">
-        <h2>About</h2>
-        <p>Brief introduction about yourself and your research interests.</p>
+    <div class="announcement">
+        <p>I am a PhD student at the University of Strathclyde</p>
     </div>
     
-    <div class="section">
-        <h2>Research</h2>
-        <p>Description of your research projects.</p>
+    <div class="profile">
+        <img src="your-photo.jpg" alt="Your Name">
+        <div class="profile-content">
+            <p>I am a PhD Student at the <a href="https://www.strath.ac.uk/business/economics/">[University of Strathclyde]</a> focusing in the fields of applied microeconmics and specializing in development economics
+                . Here is my <a href="#">CV</a>.</p>
+            
+    
+            
+            <ul class="research-list">
+                <li><a href="#">[Research Area 1]</a></li>
+                <li><a href="#">[Research Area 2]</a></li>
+                <li><a href="#">[Research Area 3]</a></li>
+                <li><a href="#">[Research Area 4]</a></li>
+            </ul>
+        </div>
     </div>
     
-    <div class="section">
+    <div id="papers" class="publications">
         <h2>Publications</h2>
-        <ul>
-            <li>Publication 1</li>
-            <li>Publication 2</li>
-        </ul>
+        
+        <div class="publication-item">
+            <p>1. <strong>[Paper Title 1]</strong></p>
+            <p>with [Co-author(s)]</p>
+            <p><em>[Journal Name, Year]</em></p>
+            <p class="publication-links">
+                <a href="#">Details</a> | <a href="#">Published</a> | <a href="#">Slides</a> | <a href="#">Code Package</a>
+            </p>
+        </div>
+        
+        <div class="publication-item">
+            <p>2. <strong>[Paper Title 2]</strong></p>
+            <p>with [Co-author(s)]</p>
+            <p><em>[Journal Name, Year]</em></p>
+            <p class="publication-links">
+                <a href="#">Details</a> | <a href="#">Published</a> | <a href="#">Paper</a>
+            </p>
+        </div>
+        
+        <div class="publication-item">
+            <p>3. <strong>[Paper Title 3]</strong></p>
+            <p><em>[Journal Name, Year]</em></p>
+            <p class="publication-links">
+                <a href="#">Details</a> | <a href="#">Published</a> | <a href="#">arXiv</a> | <a href="#">Slides</a> | <a href="#">Github</a>
+            </p>
+        </div>
     </div>
     
-    <div class="section">
-        <h2>Contact</h2>
-        <p>Email: your.email@university.edu</p>
+    <div class="working-papers">
+        <h2>Working Papers</h2>
+        
+        <div class="publication-item">
+            <p>1. <strong>[Working Paper Title]</strong></p>
+            <p>with [Co-author(s)]</p>
+        </div>
     </div>
+    
+    <div id="teaching" class="teaching">
+        <ol>
+            <li class="course">
+                <p>🔗 <a href="#"><strong>[Course Code]: [Course Title]</strong></a></p>
+                <p class="course-meta">[Semester] at [University]</p>
+            </li>
+            
+            <li class="course">
+                <p>🔗 <a href="#"><strong>[Course Code]: [Course Title]</strong></a></p>
+                <p class="course-meta">[Semester] at [University]</p>
+            </li>
+            
+            <li class="course">
+                <p>🔗 <a href="#"><strong>[Course Code]: [Course Title]</strong></a></p>
+                <p class="course-meta">[Semester] at [University]</p>
+            </li>
+        </ol>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Your Name</p>
+    </footer>
 </body>
 </html>
