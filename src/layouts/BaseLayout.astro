@@ -1,0 +1,59 @@
+---
+// Import components
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+
+// Define props
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  ogType?: string;
+}
+
+// Default values
+const {
+  title,
+  description = "Academic portfolio of Sabin Subedi, PhD Student at the University of Strathclyde focusing on applied microeconomics and development economics.",
+  image = "/images/profile.jpeg",
+  ogType = "website",
+} = Astro.props;
+
+// Construct the full title
+const fullTitle = `${title} | Sabin Subedi`;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:url" content={Astro.url} />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Google Fonts (optional - you can also use local fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="font-sans text-gray-800 bg-white antialiased min-h-screen flex flex-col">
+    <Header />
+    
+    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8 max-w-3xl">
+      <slot />
+    </main>
+    
+    <Footer />
+  </body>
+</html>

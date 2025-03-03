@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PaperDetail from '../../components/papers/PaperDetail.astro';
+
+// Set the page metadata
+const title = paper.title;
+const description = paper.abstract.substring(0, 160) + '...';
+---
+
+<BaseLayout title={title} description={description}>
+  <PaperDetail paper={paper} />
+</BaseLayout> In a real app, you would use Astro's content collections for this
+// For now, we'll define sample data directly
+const papers = [
+  {
+    slug: "remittances-farm-productivity",
+    title: "Effect of Remittances on Farm Productivity after a natural disaster",
+    authors: ["Sabin Subedi", "Prakash Pathak", "Agnese Romiti"],
+    abstract: "This paper examines how remittances affect farm productivity in the aftermath of natural disasters. Using data from Nepal after the 2015 earthquake, we find that households receiving remittances recover more quickly and invest more in agricultural inputs.",
+    status: "Working Paper",
+    keywords: ["Remittances", "Agriculture", "Natural Disasters", "Nepal"],
+    year: "2025",
+    paperUrl: "#",
+    slidesUrl: "#"
+  },
+  {
+    slug: "public-health-insurance-nepal",
+    title: "Effects of public health insurance : Evidence from Nepal",
+    authors: ["Sabin Subedi"],
+    abstract: "This study evaluates the impact of Nepal's public health insurance program on healthcare utilization, out-of-pocket expenditures, and health outcomes. Using a difference-in-differences approach, I find significant increases in healthcare utilization and reductions in catastrophic health expenditures.",
+    status: "Working Paper",
+    keywords: ["Health Insurance", "Healthcare Access", "Nepal", "Public Policy"],
+    year: "2024",
+    paperUrl: "#",
+    slidesUrl: "#"
+  }
+];
+
+// Get the current paper from the URL parameter
+const { slug } = Astro.params;
+const paper = papers.find(p => p.slug === slug);
+
+// If paper not found, return 404
+if (!paper) {
+  return Astro.redirect('/404');
+}
+
+//

@@ -1,0 +1,52 @@
+---
+// For a production site, you would import these from a content collection
+// For now, we'll define them directly
+const courses = [
+  {
+    code: "EC315",
+    title: "Topics in Microeconomics with Cross Section Econometrics (UG)",
+    period: "S2023 and S2024 at the University of Strathclyde",
+    url: "#"
+  },
+  {
+    code: "EC316",
+    title: "Topics in Macroeconomics with Time Series Econometrics (UG)",
+    period: "F2024 and F2025 at the University of Strathclyde",
+    url: "#"
+  },
+  {
+    code: "ECNM 11089",
+    title: "Econometrics 2 Time Series (PG)",
+    period: "F2025 at the University of Edinburgh",
+    url: "http://www.drps.ed.ac.uk/24-25/dpt/cxecnm11089.htm"
+  },
+  {
+    code: "EC951",
+    title: "Analysis of Economic Data (PG)",
+    period: "S2024 and F2025 at the University of Strathclyde",
+    url: "#"
+  }
+];
+---
+
+<section id="teaching" class="mt-12 scroll-mt-24">
+  <h2 class="text-2xl font-bold pb-2 border-b border-dashed border-gray-300 mb-6">Teaching</h2>
+  
+  <ol class="list-decimal pl-8 space-y-6">
+    {courses.map(course => (
+      <li>
+        <p>
+          🔗 <a 
+            href={course.url} 
+            class="font-medium text-blue-800 hover:underline"
+            target={course.url.startsWith('http') ? '_blank' : undefined}
+            rel={course.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+          >
+            {course.code}: {course.title}
+          </a>
+        </p>
+        <p class="text-gray-600 text-sm">{course.period}</p>
+      </li>
+    ))}
+  </ol>
+</section>

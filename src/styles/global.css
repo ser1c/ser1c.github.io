@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles that go beyond Tailwind */
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+/* For accessible link underlines */
+.hover-underline {
+  @apply relative;
+}
+
+.hover-underline::after {
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-800 transition-all duration-300 content-[''];
+}
+
+.hover-underline:hover::after {
+  @apply w-full;
+}
