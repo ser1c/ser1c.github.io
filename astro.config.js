@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'sabinsubedi.com.np', // Replace with your actual domain
+  site: 'https://sabinsubedi.com.np/', // Replace with your actual domain
   integrations: [
     tailwind(),
     sitemap(),
