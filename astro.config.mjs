@@ -7,7 +7,7 @@ import rehypeKatex from "rehype-katex"
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://sabinsubedi.com/",
+    site: "https://ser1c.github.io/",
     markdown: {
         syntaxHighlight: "shiki",
         shikiConfig: {
