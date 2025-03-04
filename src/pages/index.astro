@@ -1,12 +1,32 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Profile from '../components/home/Profile.astro';
-import Papers from '../components/home/Papers.astro';
-import Teaching from '../components/home/Teaching.astro';
+import Layout from "../layouts/Layout.astro";
+import {Content as About} from '../components/md/about.md'
 ---
 
-<BaseLayout title="Home">
-  <Profile />
-  <Papers />
-  <Teaching />
-</BaseLayout>
+<Layout>
+  <main>
+    <!-- Banner with Nepal-inspired styling -->
+    <p class="mb-8 announcement-box bg-mountain-50/50 border-l-4 border-dhaka-red py-4 px-4 text-mountain-700 text-size-0">
+      <strong>
+        I am a PhD candidate at the University of Strathclyde.
+      </strong>
+    </p>
+
+    <!-- Photo and About with Nepal-inspired styling -->
+    <article
+      class="flex flex-col gap-y-size-md md:gap-y-0 md:flex-row md:gap-x-size-md"
+    >
+      <div class="max-w-[14rem] lg:max-w-[18rem] mx-auto">
+        <img
+          src="/images/headshot_small.jpeg"
+          alt="Headshot of Sabin Subedi"
+          class="nepal-image"
+        />
+      </div>
+
+      <div class="prose flow">
+        <About></About>
+      </div>
+    </article>
+  </main>
+</Layout>

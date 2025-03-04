@@ -1,0 +1,66 @@
+---
+import PaperLink from "./PaperLink.astro"
+const { data, slug = "", includeSummary = false } = Astro.props
+
+// Write function to combine names with commas (including oxford comma and the word and)
+function combineNames(names) {
+	if (names.length === 0) {
+		return ""
+	} else if (names.length === 1) {
+		return `with ${names[0]}`
+	} else if (names.length === 2) {
+		return `with ${names[0]} and ${names[1]}`
+	} else {
+		return `with ${names.slice(0, -1).join(", ")}, and ${names.slice(-1)}`
+	}
+}
+const author_names = data.author
+	? combineNames(data.author.map((author) => author.name))
+	: ""
+
+const includeLinks = true
+---
+
+<Fragment>
+	<h2 class="font-zinc-800 cursor-pointer font-bold text-size-0">
+		{
+			data.display === true ? (
+				<a href={`/papers/${slug}`} set:html={data.title} class="hover:text-dhaka-red transition-colors" />
+			) : (
+				<Fragment set:html={data.title} />
+			)
+		}
+	</h2>
+
+	{author_names != "" && <p class="mt-size-3xs text-size--1">{author_names}</p>}
+
+	<p
+		class="mt-size-2xs text-alice-500 italic text-size--1"
+		set:html={data.status}
+	/>
+
+	{
+		includeLinks && (
+			<p class="mt-size-xs text-size--1">
+				<PaperLink
+					name="Details"
+					url={`/papers/${slug}`}
+					includeRightBar={true}
+				/>
+				{data.links.map((link, i) => (
+					<PaperLink
+						name={link.name}
+						url={link.url}
+						includeRightBar={i < data.links.length - 1}
+					/>
+				))}
+			</p>
+		)
+	}
+
+	{
+		includeSummary && (
+			<p class="mt-size-sm text-size-0" set:html={data.summary} />
+		)
+	}
+</Fragment>

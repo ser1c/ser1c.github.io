@@ -1,0 +1,8 @@
+---
+import "../styles/content.css"
+const { flow = false, prose = false } = Astro.props
+---
+
+<main class:list={[ 'content', {'flow': flow}, {'prose': prose} ]}>
+  <slot />
+</main>

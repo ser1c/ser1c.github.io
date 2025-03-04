@@ -1,0 +1,235 @@
+/* 
+  nepal-theme.css - Custom Nepal-inspired theme styles
+  Add this to your styles directory and import it in BaseLayout.astro
+*/
+
+/* Define Nepal-inspired color palette as CSS variables for easier reference */
+:root {
+  --mountain-slate: #475569;
+  --mountain-shadow: #334155;
+  --snow-white: #f8fafc;
+  --stone-gray: #78716c;
+  --pine-green: #14532d;
+  --dhaka-red: #b91c1c;
+  --dhaka-maroon: #7f1d1d;
+  --dhaka-yellow: #ca8a04;
+  --dhaka-blue: #1e40af;
+  --dhaka-gold: #eab308;
+  --dhaka-green: #14532d;
+}
+
+/* Mountain silhouette header */
+.mountain-header {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.mountain-silhouette {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 40px;
+  z-index: 0;
+  opacity: 0.3;
+  background-image: url('/images/mountain-silhouette.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Dhaka-inspired border for headers */
+.dhaka-border {
+  position: relative;
+}
+
+.dhaka-border::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    var(--dhaka-red) 0%, 
+    var(--dhaka-red) 20%, 
+    var(--dhaka-yellow) 20%, 
+    var(--dhaka-yellow) 35%, 
+    var(--dhaka-blue) 35%, 
+    var(--dhaka-blue) 50%, 
+    var(--dhaka-maroon) 50%, 
+    var(--dhaka-maroon) 65%, 
+    var(--dhaka-gold) 65%, 
+    var(--dhaka-gold) 80%,
+    var(--dhaka-green) 80%,
+    var(--dhaka-green) 100%
+  );
+}
+
+/* Announcement box with subtle Dhaka pattern accent */
+.announcement-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.announcement-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(202, 138, 4, 0.1) 40%,
+    rgba(202, 138, 4, 0.1) 60%,
+    transparent 60%
+  );
+  opacity: 0.5;
+}
+
+/* Nepal-inspired image style */
+.nepal-image {
+  border: 3px solid var(--snow-white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* Navigation link with Nepal-inspired accent */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--dhaka-red);
+  transition: width 0.2s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Footer with Nepal-inspired Dhaka pattern */
+.nepal-footer {
+  position: relative;
+  border-top: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.nepal-footer::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    transparent 10%,
+    var(--dhaka-red) 10%, 
+    var(--dhaka-red) 25%, 
+    var(--dhaka-yellow) 25%, 
+    var(--dhaka-yellow) 40%, 
+    var(--dhaka-blue) 40%, 
+    var(--dhaka-blue) 55%, 
+    var(--dhaka-gold) 55%, 
+    var(--dhaka-gold) 70%,
+    var(--dhaka-maroon) 70%,
+    var(--dhaka-maroon) 85%,
+    transparent 85%,
+    transparent 100%
+  );
+}
+
+/* Consistent link styling across the site */
+a:not(.nav-link):not([class*="no-underline"]):not([href="/"]) {
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  border-bottom: 1px solid var(--dhaka-yellow);
+}
+
+a:not(.nav-link):not([class*="no-underline"]):not([href="/"]):hover {
+  border-bottom-color: var(--dhaka-red);
+}
+
+/* Override prose link styles */
+.prose a {
+  color: var(--dhaka-blue);
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--dhaka-yellow) !important;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.prose a:hover {
+  color: var(--dhaka-red);
+  border-bottom-color: var(--dhaka-red) !important;
+}
+
+/* Style lists with Nepal-inspired bullets */
+.prose ul {
+  list-style: none;
+  padding-left: 1.2rem;
+}
+
+.prose ul li {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.prose ul li::before {
+  content: "•";
+  color: var(--dhaka-red);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* Special link styles for Papers, PDFs, etc. */
+a[href$=".pdf"],
+a:has(span:contains("Paper")),
+a:has(span:contains("Details")),
+a:has(span:contains("Slides")) {
+  border-bottom: 2px solid var(--dhaka-yellow);
+}
+
+a[href$=".pdf"]:hover,
+a:has(span:contains("Paper")):hover,
+a:has(span:contains("Details")):hover,
+a:has(span:contains("Slides")):hover {
+  border-bottom-color: var(--dhaka-red);
+}
+
+/* Paper titles should have thinner underlines but same color scheme */
+a h3, 
+a h4,
+h3 a,
+h4 a {
+  border-bottom: 1px solid var(--dhaka-yellow);
+  display: inline;
+}
+
+a:hover h3,
+a:hover h4,
+h3 a:hover,
+h4 a:hover {
+  border-bottom-color: var(--dhaka-red);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 640px) {
+  .mountain-silhouette {
+    display: none;
+  }
+  
+  .nepal-footer::before {
+    left: 10%;
+    right: 10%;
+  }
+}

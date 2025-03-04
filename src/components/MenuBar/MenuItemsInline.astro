@@ -1,0 +1,15 @@
+---
+const items = [
+  { name: "Papers", link: "/papers/" },
+  { name: "Teaching", link: "/teaching/" },
+  { name: "Blog", link: "/blog/" },
+];
+---
+
+<ul class="gap-size-xs-sm flex flex-wrap text-size-0 font-light">
+  {items.map((item) => (
+    <li class="relative">
+      <a href={item.link} class="nav-link text-mountain-600 hover:text-dhaka-red transition-colors">{item.name}</a>
+    </li>
+  ))}
+</ul>

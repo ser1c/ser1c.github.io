@@ -1,59 +1,57 @@
 ---
-// Import components
-import Header from "../components/common/Header.astro";
-import Footer from "../components/common/Footer.astro";
+import MenuBar from "../components/MenuBar/MenuBar.astro"
+import IncludeKatex from "../components/IncludeKatex.astro"
+import LoadFonts from '../components/font/LoadFonts.astro'
 
-// Define props
-interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  ogType?: string;
-}
+import "../styles/global.css"
+// Importing the Nepal-inspired theme CSS - make sure this path is correct
+import "../styles/nepal-theme.css"
 
-// Default values
+// og-image by slug
 const {
-  title,
-  description = "Academic portfolio of Sabin Subedi, PhD Student at the University of Strathclyde focusing on applied microeconomics and development economics.",
-  image = "/images/profile.jpeg",
-  ogType = "website",
-} = Astro.props;
-
-// Construct the full title
-const fullTitle = `${title} | Sabin Subedi`;
+  description = "Sabin Subedi - Applied Microeconomics & Development Economics", // Your custom default description
+  katex = false,
+} = Astro.props
+const ogImage = `https://sabinsubedi.com/og-images/default.svg`
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content={ogType} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
-    <meta property="og:url" content={Astro.url} />
-    <meta name="twitter:card" content="summary_large_image" />
-    
-    <!-- Google Fonts (optional - you can also use local fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body class="font-sans text-gray-800 bg-white antialiased min-h-screen flex flex-col">
-    <Header />
-    
-    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8 max-w-3xl">
-      <slot />
-    </main>
-    
-    <Footer />
-  </body>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<title>Sabin Subedi</title>
+		<meta name="description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="twitter:image" content={ogImage} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Sabin Subedi" />
+		<meta name="twitter:description" content={description} />
+
+    <LoadFonts />
+    <!-- Include katex --> 
+		{katex && <IncludeKatex />}
+	</head>
+
+	<body
+		class="min-h-screen w-full bg-mountain-50 font-serif text-mountain-700 pb-size-lg"
+	>
+		<header class="content mountain-header dhaka-border relative">
+			<!-- Mountain silhouette background (hidden on mobile) -->
+			<div class="mountain-silhouette hidden md:block"></div>
+			
+			<MenuBar />
+		</header>
+
+		<!-- Main  -->
+		<slot />
+
+	<!-- Nepal-inspired footer -->
+<footer class="py-8 mt-12 nepal-footer">
+	<div class="max-w-prose mx-auto text-center">
+	  <p class="text-mountain-500 font-serif text-size--1">© {new Date().getFullYear()} Sabin Subedi. All rights reserved.</p>
+	</div>
+  </footer>
+	</body>
 </html>

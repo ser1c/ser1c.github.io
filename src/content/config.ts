@@ -1,39 +1,67 @@
-import { defineCollection, z } from 'astro:content';
+import { z, defineCollection } from "astro:content"
 
-// Define schemas for content collections
-const papersCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    authors: z.array(z.string()).optional(),
-    coauthors: z.string().optional(),
-    abstract: z.string(),
-    status: z.string().default('Working Paper'),
-    date: z.date().optional(),
-    year: z.string(),
-    keywords: z.array(z.string()).optional(),
-    paperUrl: z.string().optional(),
-    slidesUrl: z.string().optional(),
-    published: z.boolean().default(true),
-  }),
-});
-
-const teachingCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    code: z.string(),
-    title: z.string(),
-    level: z.enum(['UG', 'PG']).optional(),
-    institution: z.string(),
-    period: z.string(),
-    url: z.string().optional(),
-    description: z.string().optional(),
-    published: z.boolean().default(true),
-  }),
-});
-
-// Export the collections
 export const collections = {
-  'papers': papersCollection,
-  'teaching': teachingCollection,
-};
+	papers: defineCollection({
+		type: "content",
+		schema: z.object({
+			title: z.string(),
+			author: z
+				.array(
+					z.object({
+						name: z.string(),
+						url: z.string().url(),
+						affiliation: z.string(),
+					})
+				)
+				.optional(),
+			links: z.array(
+				z.object({
+					name: z.string(),
+					url: z.string(),
+				})
+			),
+			date: z.string().regex(/[0-9]{4}-[0-9]{2}-[0-9]{2}/),
+			categories: z.array(z.string()).optional(),
+			status: z.string(),
+			summary: z.string().optional(),
+			draft: z.boolean().default(false),
+			order: z.number().default(0),
+		}),
+	}),
+	"open-source": defineCollection({
+		type: "data",
+		schema: z.object({
+			title: z.string(),
+			url: z.string().url(),
+			description: z.string(),
+		}),
+	}),
+	courses: defineCollection({
+		type: "data",
+		schema: z.object({
+			title: z.string(),
+			url: z.string().url(),
+			description: z.string(),
+		}),
+	}),
+	blog: defineCollection({
+		type: "content",
+		schema: z.object({
+			title: z.string(),
+			description: z.string(),
+			author: z.array(
+				z.object({
+					name: z.string(),
+					url: z.string().url(),
+				})
+			).optional(),
+			date: z.string().regex(/[0-9]{4}-[0-9]{2}-[0-9]{2}/),
+			categories: z.array(z.string()).optional(),
+			draft: z.boolean().default(false),
+			// New fields for Substack integration
+			substackLink: z.string().url().optional(),
+			substackAuthor: z.string().optional(),
+			substackPublished: z.boolean().default(true),
+		}),
+	}),
+}

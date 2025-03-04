@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="50px" viewBox="0 0 200 50" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mountain silhouette inspired by Himalayan ranges -->
+  <g stroke="none" fill="none" fill-rule="evenodd">
+    <!-- Farthest range -->
+    <path d="M0,50 L15,30 L25,35 L40,25 L50,30 L65,20 L80,30 L95,15 L110,25 L125,15 L140,25 L155,18 L170,28 L185,20 L200,25 L200,50 Z" 
+          fill="#475569" opacity="0.3"></path>
+    
+    <!-- Middle range -->
+    <path d="M0,50 L20,35 L40,40 L60,25 L80,35 L100,22 L120,32 L140,22 L160,30 L180,20 L200,28 L200,50 Z" 
+          fill="#334155" opacity="0.4"></path>
+    
+    <!-- Closest range -->
+    <path d="M0,50 L30,40 L60,45 L90,33 L120,40 L150,30 L180,38 L200,32 L200,50 Z" 
+          fill="#1e293b" opacity="0.5"></path>
+    
+    <!-- Snow caps on peaks -->
+    <path d="M65,21 L65,19 L66,20 Z M95,16 L95,14 L96,15 Z M125,16 L125,14 L126,15 Z M155,19 L155,17 L156,18 Z M185,21 L185,19 L186,20 Z" 
+          fill="#f8fafc" opacity="0.7"></path>
+  </g>
+</svg>

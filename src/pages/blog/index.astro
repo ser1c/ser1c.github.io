@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import BlogListCard from "../../components/blog/BlogListCard.jsx"
+import { getCollection } from "astro:content"
+let posts_unsorted = await getCollection("blog")
+
+console.log("Total posts found:", posts_unsorted.length);
+if (posts_unsorted.length > 0) {
+  console.log("First post slug:", posts_unsorted[0].slug);
+  console.log("First post data:", posts_unsorted[0].data);
+}
+
+let posts = posts_unsorted.sort((a, b) => {
+	let aDate = new Date(a.data.date)
+	let bDate = new Date(b.data.date)
+
+	// getTime is milliseconds since Jan 1, 1970, 00:00:00.000 GMT
+	return bDate.getTime() - aDate.getTime()
+})
+posts = posts.filter((post) => post.data.draft != true)
+console.log("Posts after filtering:", posts.length);
+---
+
+<Layout content prose>
+  <ul class="flex flex-col gap-y-size-sm">
+    {posts.map((post, i) => <BlogListCard post={post} />)}
+  </ul>
+</Layout>

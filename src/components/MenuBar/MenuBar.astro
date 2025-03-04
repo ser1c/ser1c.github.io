@@ -1,0 +1,19 @@
+---
+import MenuItemsInline from "./MenuItemsInline.astro";
+import SocialItems from "./SocialItems.astro";
+---
+
+<nav
+  class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs border-b-[1px] border-zinc-200">
+  <div class="flex flex-wrap items-center justify-between">
+    <h1 class="text-size-1 font-bold text-mountain-700">
+      <a href="/" class="hover:text-dhaka-red transition-colors">Sabin Subedi</a>
+    </h1>
+
+    <div class="flex items-center gap-size-2xs-xs">
+      <SocialItems />
+    </div>
+  </div>
+
+  <MenuItemsInline />
+</nav>

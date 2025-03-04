@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Nepalese flag-inspired colors: Crimson red (#DC143C) and deep blue (#003893) -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#003893" />
+      <stop offset="100%" stop-color="#DC143C" />
+    </linearGradient>
+    
+    <!-- Traditional Nepalese mandala pattern -->
+    <pattern id="mandala-pattern" width="100" height="100" patternUnits="userSpaceOnUse">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1" />
+      <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1" />
+      <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1" />
+      <circle cx="50" cy="50" r="10" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1" />
+      <path d="M50,10 L50,90 M10,50 L90,50 M22,22 L78,78 M22,78 L78,22" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />
+    </pattern>
+  </defs>
+  
+  <!-- Background with Nepalese-inspired gradient -->
+  <rect width="1200" height="630" fill="url(#bg-gradient)" />
+  
+  <!-- Mandala pattern overlay -->
+  <rect width="1200" height="630" fill="url(#mandala-pattern)" />
+  
+  <!-- Left side decorative element: Stylized Himalayan mountains -->
+  <path d="M0,350 L120,220 L200,280 L280,180 L360,250 L440,150 L500,230 L570,130 L630,200 L630,350 Z" fill="#FFFFFF" opacity="0.15" />
+  
+  <!-- Right side decorative element: Nepal flag shape outline -->
+  <path d="M950,150 L1050,220 L950,290 L1050,360 L950,430 L950,150 Z" fill="none" stroke="rgba(255, 255, 255, 0.4)" stroke-width="4" />
+  
+  <!-- Profile picture placeholder with Nepalese-style border -->
+  <circle cx="300" cy="315" r="120" fill="none" stroke="#FFF" stroke-width="8" />
+  <circle cx="300" cy="315" r="110" fill="#FFFFFF" opacity="0.1" />
+  
+  <!-- Stylized "SS" initials -->
+  <text x="300" y="340" font-family="Arial, sans-serif" font-size="90" font-weight="bold" text-anchor="middle" fill="#FFFFFF">SS</text>
+  
+  <!-- Name and title -->
+  <text x="680" y="270" font-family="Arial, sans-serif" font-size="64" font-weight="bold" text-anchor="middle" fill="#FFFFFF">Sabin Subedi</text>
+  <text x="680" y="340" font-family="Arial, sans-serif" font-size="40" text-anchor="middle" fill="#FFFFFF">Economics PhD</text>
+  
+  <!-- Removed "From Nepal" as requested -->
+  
+  <!-- Stylized Dhaka pattern line (traditional Nepali textile) -->
+  <path d="M480,440 L880,440" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="15,5,2,5" />
+  
+  <!-- Updated tagline -->
+  <text x="680" y="500" font-family="Arial, sans-serif" font-size="24" font-style="italic" text-anchor="middle" fill="rgba(255, 255, 255, 0.8)">Applied Microeconomics - Development Economics</text>
+  
+  <!-- Small decorative elements from Nepalese art -->
+  <circle cx="480" cy="440" r="6" fill="#FFFFFF" />
+  <circle cx="880" cy="440" r="6" fill="#FFFFFF" />
+  
+  <!-- Himalayan silhouette at the bottom -->
+  <path d="M0,580 L70,540 L150,560 L250,520 L350,555 L450,525 L550,565 L650,530 L750,550 L850,520 L950,545 L1050,530 L1150,560 L1200,545 L1200,630 L0,630 Z" fill="#FFFFFF" opacity="0.1" />
+</svg>

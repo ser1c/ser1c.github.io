@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content"
+import Block from "../../components/Block.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import PaperInfo from "../../components/paper/PaperInfo.astro"
+
+export async function getStaticPaths() {
+	const papers = await getCollection("papers")
+	return papers.map((paper) => ({
+		params: { slug: paper.slug },
+		props: { paper },
+	}))
+}
+
+const { paper } = Astro.props
+const { Content } = await paper.render()
+---
+
+<BaseLayout slug={paper.slug} katex>
+	<Block>
+    <div class="border-l-[2px] border-zinc-800 px-4 py-2">
+      <PaperInfo data={paper.data} includeSummary />
+    </div>
+	</Block>
+	<div class="mt-size-2xl"></div>
+	<Block prose flow>
+    <Content />
+  </Block>
+</BaseLayout>

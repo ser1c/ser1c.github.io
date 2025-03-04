@@ -1,27 +1,74 @@
+@import url(fluid.css); /* Defines fluid type and spacing variables */
+@import url(content.css);
+@import './nepal-theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles that go beyond Tailwind */
-html {
-  scroll-behavior: smooth;
+body {
+  line-height: 1.5;
 }
 
-@layer base {
-  a {
-    @apply transition-colors duration-200;
-  }
+/* Load Fonts */
+@font-face {
+	font-family: "Libertine";
+	src: url("/fonts/LinuxLibertine_Regular.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Libertine";
+	src: url("/fonts/LinuxLibertine_Italic.woff") format("woff");
+	font-weight: normal;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Libertine";
+	src: url("/fonts/LinuxLibertine_Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Libertine";
+	src: url("/fonts/LinuxLibertine_BoldItalic.woff") format("woff");
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+/* @font-face {
+  font-family: 'Libertine';
+  src: url('/fonts/LinuxLibertine_SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Libertine';
+  src: url('/fonts/LinuxLibertine_SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+} */
+
+
+
+/* Code Blocks */
+pre {
+  @apply border-[1px] border-zinc-200;
+  padding: 1rem;
+  overflow-x: auto;
+  display: block
+}
+pre > code {
+	display: grid;
+}
+code {
+  font-size: 0.88em;
+}
+.language-id {
+  display: none;
 }
 
-/* For accessible link underlines */
-.hover-underline {
-  @apply relative;
-}
-
-.hover-underline::after {
-  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-800 transition-all duration-300 content-[''];
-}
-
-.hover-underline:hover::after {
-  @apply w-full;
-}

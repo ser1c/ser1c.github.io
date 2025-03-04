@@ -1,0 +1,19 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+}
+const { src, alt } = Astro.props
+const isSvg = src.endsWith(".svg");
+---
+
+<figure class="not-prose figure border-zinc-200 border-2">
+  {isSvg ? (
+    <object data={src} type="image/svg+xml" class="w-full"></object>
+  ) : (
+    <img src={src} alt={alt} class="w-full" />
+  )}
+  <figcaption class="text-xl mt-size-2xs">
+    <b>Figure:</b> {alt}
+  </figcaption>
+</figure>
