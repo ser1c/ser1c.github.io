@@ -1,0 +1,43 @@
+name: Update Substack Blog Posts
+
+on:
+  schedule:
+    # Run daily at midnight
+    - cron: '0 0 * * *'
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  update-blog-posts:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm install axios fast-xml-parser
+        
+      - name: Fetch and update blog posts
+        run: node scripts/fetch-blog-posts.js
+        
+      - name: Check for changes
+        id: git-check
+        run: |
+          git status
+          git diff --quiet && git diff --staged --quiet && echo "changes=false" >> $GITHUB_OUTPUT || echo "changes=true" >> $GITHUB_OUTPUT
+        
+      - name: Commit and push if there are changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/content/blog/
+          git commit -m "Update blog posts from Substack [skip ci]"
+          git push
