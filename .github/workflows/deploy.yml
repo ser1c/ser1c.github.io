@@ -38,6 +38,11 @@ jobs:
       - name: Build with Astro
         run: npm run build
       
+      - name: Verify build output
+        run: |
+          ls -R ./dist
+          echo "Build completed successfully"
+      
       - name: Create .nojekyll file
         run: touch ./dist/.nojekyll  
       
@@ -45,11 +50,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-      
-      - name: Verify Tailwind build
-  run: |
-    npm run build
-    cat ./dist/assets/*.css  
+          # Optional: compress artifact to reduce storage usage
+          retention-days: 1
 
   deploy:
     needs: build
