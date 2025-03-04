@@ -45,6 +45,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
+      
+      - name: Verify Tailwind build
+  run: |
+    npm run build
+    cat ./dist/assets/*.css  # This will show the generated CSS    
 
   deploy:
     needs: build
