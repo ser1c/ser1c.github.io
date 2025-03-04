@@ -49,7 +49,7 @@ jobs:
       - name: Verify Tailwind build
   run: |
     npm run build
-    cat ./dist/assets/*.css  # This will show the generated CSS    
+    cat ./dist/assets/*.css  
 
   deploy:
     needs: build
