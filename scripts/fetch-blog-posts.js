@@ -27,7 +27,8 @@ async function fetchBlogPosts() {
         const response = await axios.get(feedUrl, {
           headers: {
             'User-Agent': 'Mozilla/5.0 (compatible; AcademicPortfolioBot/1.0)',
-            'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml'
+            'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml',
+            'Referer': SUBSTACK_URL // Add Referer header
           }
         });
         
@@ -146,7 +147,7 @@ draft: false
 ${excerpt}
 
 [Read the full post on Substack](${link})
-`;
+      `;
       
       // Write to file
       const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
