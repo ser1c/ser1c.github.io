@@ -8,6 +8,13 @@ const args = process.argv.slice(2);
 const SUBSTACK_URL = args[0] || 'https://sabinsubedi.substack.com';
 const OUTPUT_DIR = path.join(__dirname, '../src/content/blog');
 
+// Custom headers for the request
+const HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+  'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml',
+  'Referer': SUBSTACK_URL
+};
+
 async function fetchBlogPosts() {
   try {
     console.log(`Using Substack URL: ${SUBSTACK_URL}`);
@@ -24,13 +31,7 @@ async function fetchBlogPosts() {
       const feedUrl = `${SUBSTACK_URL}${feedPath}`;
       try {
         console.log(`Attempting to fetch feed from: ${feedUrl}`);
-        const response = await axios.get(feedUrl, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; AcademicPortfolioBot/1.0)',
-            'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml',
-            'Referer': SUBSTACK_URL // Add Referer header
-          }
-        });
+        const response = await axios.get(feedUrl, { headers: HEADERS });
         
         // If we get here, we found a working feed
         console.log(`✓ Successfully fetched feed from: ${feedUrl}`);
@@ -58,24 +59,20 @@ async function fetchBlogPosts() {
       result = parser.parse(feedData);
     } catch (parseError) {
       console.error('Error parsing feed:', parseError);
-      // Save problematic feed for inspection
       await fs.writeFile('problematic-feed.xml', feedData);
       console.log('Saved problematic feed to problematic-feed.xml for inspection');
       throw parseError;
     }
     
-    // Handle both RSS and Atom feed formats
     let items = [];
     let feedTitle = 'Substack';
-    
+
     if (result.rss && result.rss.channel) {
-      // RSS format
       console.log('Detected RSS feed format');
       const channel = result.rss.channel;
       items = Array.isArray(channel.item) ? channel.item : (channel.item ? [channel.item] : []);
       feedTitle = channel.title || 'Substack';
     } else if (result.feed && result.feed.entry) {
-      // Atom format
       console.log('Detected Atom feed format');
       items = Array.isArray(result.feed.entry) ? result.feed.entry : [result.feed.entry];
       feedTitle = result.feed.title || 'Substack';
@@ -93,7 +90,6 @@ async function fetchBlogPosts() {
     
     // Process each item
     for (const item of items) {
-      // Handle both RSS and Atom formats
       const title = item.title || '';
       const link = item.link || (item.link && item.link['@_href']) || '';
       const pubDate = new Date(item.pubDate || item.published || item.updated || new Date());
@@ -107,25 +103,16 @@ async function fetchBlogPosts() {
       
       console.log(`Processing post: "${title}"`);
       
-      // Clean description (remove HTML)
       description = description.replace(/<[^>]*>?/gm, '');
       description = description.length > 160 ? description.substring(0, 160) + '...' : description;
       
-      // Create slug from title
-      const slug = `substack-${title
-        .toLowerCase()
-        .replace(/[^\w\s]/g, '')
-        .replace(/\s+/g, '-')}`;
-      
-      // Format date for frontmatter (YYYY-MM-DD) - IMPORTANT: keep as string format
+      const slug = `substack-${title.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-')}`;
       const formattedDate = pubDate.toISOString().split('T')[0];
       
-      // Extract categories or use default
       const categories = Array.isArray(item.category) 
         ? item.category.map(c => typeof c === 'string' ? c : c['#text'] || c.toString())
         : (item.category ? [typeof item.category === 'string' ? item.category : item.category['#text'] || 'Substack'] : ['Substack']);
       
-      // Create frontmatter exactly matching your schema requirements
       const frontmatter = `---
 title: "${title.replace(/"/g, '\\"')}"
 description: "${description.replace(/"/g, '\\"')}"
@@ -137,11 +124,9 @@ categories: ${JSON.stringify(categories)}
 draft: false
 ---`;
 
-      // Extract a clean excerpt from content
       let excerpt = (content || description).replace(/<[^>]*>?/gm, '');
       excerpt = excerpt.substring(0, 500) + '...';
 
-      // Create file content
       const fileContent = `${frontmatter}
 
 ${excerpt}
@@ -149,10 +134,8 @@ ${excerpt}
 [Read the full post on Substack](${link})
       `;
       
-      // Write to file
       const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
       
-      // Check if file exists to avoid unnecessary updates
       let shouldWrite = true;
       try {
         const existingContent = await fs.readFile(filePath, 'utf8');
