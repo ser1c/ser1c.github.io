@@ -24,5 +24,9 @@ pnpm-debug.log*
 # .astro
 .astro/
 
-# Local Netlify folder
-.netlify
+# .github
+
+.github
+
+.DS_Store
+.
