@@ -1,0 +1,235 @@
+/* theme-modes.css - Add this to your styles directory */
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #0f172a; /* mountain-800 */
+  color: #f8fafc; /* mountain-50 */
+}
+
+/* Dark mode color overrides based on your Nepal-inspired theme */
+.dark .text-mountain-700,
+.dark p,
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6,
+.dark li {
+  color: #f8fafc; /* mountain-50 - ensure all text is light in dark mode */
+}
+
+.dark .text-mountain-600 {
+  color: #e2e8f0; /* mountain-100 */
+}
+
+.dark .text-mountain-500 {
+  color: #cbd5e1; /* mountain-200 */
+}
+
+.dark .border-zinc-200 {
+  border-color: #334155; /* mountain-600 */
+}
+
+.dark .bg-mountain-50 {
+  background-color: #0f172a; /* mountain-800 */
+}
+
+.dark .bg-mountain-50\/50 {
+  background-color: rgba(15, 23, 42, 0.5); /* mountain-800 with opacity */
+}
+
+.dark .hover\:text-dhaka-red:hover {
+  color: #ef4444; /* Brighter red for dark mode contrast */
+}
+
+.dark .announcement-box {
+  background-color: rgba(30, 41, 59, 0.5); /* mountain-700 with opacity */
+  color: #f8fafc; /* mountain-50 */
+  border-color: #b91c1c; /* dhaka-red */
+}
+
+/* Colorblind mode styles - Deuteranopia friendly palette */
+.colorblind {
+  --dhaka-red-cb: #0072B2; /* Blue that's distinguishable for most colorblind types */
+}
+
+.colorblind .hover\:text-dhaka-red:hover,
+.colorblind .text-dhaka-red {
+  color: var(--dhaka-red-cb);
+}
+
+.colorblind .border-dhaka-red {
+  border-color: var(--dhaka-red-cb);
+}
+
+.colorblind .announcement-box {
+  border-color: var(--dhaka-red-cb);
+}
+
+/* Social icon colorblind adjustments */
+.colorblind .hover\:text-blue-500:hover,
+.colorblind .hover\:text-blue-700:hover,
+.colorblind .hover\:text-purple-700:hover,
+.colorblind .hover\:text-green-600:hover {
+  color: var(--dhaka-red-cb); /* Consistent color for all social icons */
+}
+
+/* Dark + Colorblind mode */
+.dark.colorblind {
+  --dhaka-red-cb: #56B4E9; /* Brighter blue for dark+colorblind mode */
+}
+
+/* Background pattern and border for dhaka */
+.dark .bg-dhaka-pattern,
+.dark .bg-dhaka-border,
+.dark .bg-mountain-header {
+  opacity: 0.8; /* Reduce intensity in dark mode */
+}
+
+.colorblind .bg-dhaka-pattern,
+.colorblind .bg-dhaka-border {
+  filter: grayscale(30%) saturate(80%); /* Adjust patterns for colorblind mode */
+}
+
+/* Theme toggle buttons styling */
+.dark .theme-toggle,
+.dark .colorblind-toggle {
+  background-color: #334155; /* mountain-600 */
+  color: #f8fafc; /* mountain-50 */
+  border-color: #475569; /* mountain-500 */
+}
+
+.dark .theme-toggle:hover,
+.dark .colorblind-toggle:hover {
+  background-color: #475569; /* mountain-500 */
+}
+
+/* Add these styles to your theme-modes.css file */
+
+/* Publications, Working Papers, Work in Progress sections */
+.dark h2, 
+.dark h3, 
+.dark .section-title {
+  color: #e2e8f0 !important; /* Lighter text for headers */
+}
+
+/* Working paper links */
+.dark .working-paper,
+.dark a[href*="paper"] {
+  color: #38bdf8 !important; /* Light blue for better visibility */
+}
+
+/* Fix for numbered lists */
+.dark ol {
+  color: #f8fafc;
+}
+
+.dark ol li {
+  color: #f8fafc;
+}
+
+/* Ensure links are visible */
+.dark a {
+  color: #60a5fa; /* Blue that works on dark backgrounds */
+}
+
+.dark a:hover {
+  color: #93c5fd; /* Lighter blue on hover */
+}
+
+/* Special handling for paper titles */
+.dark h3 a,
+.dark .paper-title {
+  color: #f8fafc !important;
+}
+
+/* Better button/control visibility */
+.dark button,
+.dark .button,
+.dark [role="button"] {
+  background-color: #334155; /* mountain-600 */
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+.dark button:hover,
+.dark .button:hover,
+.dark [role="button"]:hover {
+  background-color: #475569; /* mountain-500 */
+}
+
+/* Handle any custom dashed borders like those in your sections */
+.dark [class*="border-dashed"],
+.dark hr {
+  border-color: #475569; /* mountain-500 */
+}
+
+/* Footer improvements */
+.dark footer {
+  background-color: #020617; /* mountain-900 */
+}
+
+.dark footer p,
+.dark .footer-text {
+  color: #94a3b8 !important; /* mountain-300 - more visible but not too bright */
+}
+
+/* Improving contrast for the Nepal-inspired border */
+.dark .dhaka-border {
+  opacity: 0.8;
+  filter: brightness(1.2);
+}
+
+/* Add these styles to your theme-modes.css file for improved button appearance */
+
+/* Theme toggle buttons - Light Mode */
+.theme-toggle,
+.colorblind-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  background-color: #1e293b; /* mountain-700 */
+  color: #f8fafc; /* mountain-50 */
+  border: 1px solid #334155; /* mountain-600 */
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover,
+.colorblind-toggle:hover {
+  background-color: #334155; /* mountain-600 */
+}
+
+/* Theme toggle buttons - Dark Mode */
+.dark .theme-toggle,
+.dark .colorblind-toggle {
+  background-color: #475569; /* mountain-500 */
+  color: #f8fafc; /* mountain-50 */
+  border-color: #64748b; /* mountain-400 */
+}
+
+.dark .theme-toggle:hover,
+.dark .colorblind-toggle:hover {
+  background-color: #64748b; /* mountain-400 */
+}
+
+/* Icons inside buttons */
+.theme-toggle svg,
+.colorblind-toggle svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Text inside buttons */
+.theme-toggle span,
+.colorblind-toggle span {
+  font-weight: 500;
+}

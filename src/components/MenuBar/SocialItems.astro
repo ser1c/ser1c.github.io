@@ -19,8 +19,13 @@ const socialLinks: SocialLink[] = [
   },
   {
     platform: 'linkedin',
-    url: 'hhttps://www.linkedin.com/in/sabin-subedi-007575134/', // Update with your actual LinkedIn URL
+    url: 'https://www.linkedin.com/in/sabin-subedi-007575134/', 
     ariaLabel: "Sabin Subedi's LinkedIn Profile"
+  },
+  {
+    platform: 'substack',
+    url: 'https://substack.com/@sabinsubedi', // Replace with your actual Substack URL
+    ariaLabel: "Sabin Subedi's Substack Newsletter"
   },
   {
     platform: 'email',
@@ -93,6 +98,21 @@ const { className = "flex space-x-4" } = Astro.props;
         </svg>
       )}
 
+{link.platform === 'substack' && (
+  <svg 
+    class="h-5 w-5 text-zinc-500 hover:text-orange-500" 
+    viewBox="0 0 24 24" 
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M3 3h18M3 9h18"/>
+    <path d="M3 15h18v6l-9-4-9 4v-6z"/>
+  </svg>
+)}
       {link.platform === 'email' && (
         <svg 
           class="h-5 w-5 text-zinc-500 hover:text-green-600" 

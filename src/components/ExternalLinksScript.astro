@@ -1,0 +1,35 @@
+---
+// ExternalLinksScript.astro - Add this component to your BaseLayout.astro
+---
+
+<script>
+    // Function to add target="_blank" and rel="noopener noreferrer" to external links
+    function setupExternalLinks() {
+      // Get all links on the page
+      const links = document.querySelectorAll('a');
+      
+      // Loop through each link
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Skip if no href or it's a same-page anchor or already has target="_blank"
+        if (!href || href.startsWith('#') || link.getAttribute('target') === '_blank') return;
+        
+        // Check if link is external (not starting with / and contains :// or is a mailto: link)
+        const isExternal = 
+          (!href.startsWith('/') && (href.includes('://') || href.startsWith('mailto:')));
+        
+        // If it's an external link, open in new tab
+        if (isExternal) {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+    }
+    
+    // Run the function when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', setupExternalLinks);
+    
+    // Also run when the page content might change (for SPAs)
+    document.addEventListener('astro:page-load', setupExternalLinks);
+  </script>

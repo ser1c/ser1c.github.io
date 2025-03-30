@@ -1,16 +1,21 @@
 ---
 import MenuItemsInline from "./MenuItemsInline.astro";
 import SocialItems from "./SocialItems.astro";
+import ThemeToggle from "../ThemeToggle.astro";
 ---
 
 <nav
-  class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs border-b-[1px] border-zinc-200">
+  class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs">
   <div class="flex flex-wrap items-center justify-between">
-    <h1 class="text-size-1 font-bold text-mountain-700">
-      <a href="/" class="hover:text-dhaka-red transition-colors">Sabin Subedi</a>
+    <h1 class="text-size-2 md:text-size-3 font-bold text-mountain-700 flex items-center">
+      <a href="/" class="hover:text-dhaka-red transition-colors flex items-center gap-2">
+        Sabin Subedi
+        <img src="/images/nepal-flag-mini.png" alt="Nepal Flag" class="h-5 md:h-6 w-auto" />
+      </a>
     </h1>
 
     <div class="flex items-center gap-size-2xs-xs">
+      <ThemeToggle />
       <SocialItems />
     </div>
   </div>

@@ -24,6 +24,7 @@
   padding-bottom: 1.5rem;
 }
 
+/* This is for mountain silhouette background 
 .mountain-silhouette {
   position: absolute;
   top: 0;
@@ -36,7 +37,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
-
+*/
 /* Dhaka-inspired border for headers */
 .dhaka-border {
   position: relative;
@@ -232,4 +233,29 @@ h4 a:hover {
     left: 10%;
     right: 10%;
   }
+}
+
+/* Add this to your existing CSS */
+
+/* Nepal flag background styling */
+.nepal-flag-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1; /* Place it behind all content */
+  pointer-events: none; /* Make it non-interactive */
+  background-image: url('/images/nepal-flag.svg'); /* Path to your flag SVG */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.05; /* Very low opacity - adjust as needed */
+  mix-blend-mode: multiply; /* Helps it blend better with your background */
+}
+
+/* Dark mode adjustment */
+.dark .nepal-flag-background {
+  opacity: 0.03; /* Even lower opacity for dark mode */
+  mix-blend-mode: screen; /* Different blend mode for dark backgrounds */
 }

@@ -6,6 +6,12 @@ const repos = await getCollection("open-source")
 ---
 
 <Layout>
+	 <!-- Banner with Nepal-inspired styling -->
+	 <p class="mb-8 announcement-box bg-mountain-50/50 border-l-4 border-dhaka-red py-4 px-4 text-mountain-700 text-size-0">
+		<strong>
+		  Currently in development. Have a visit later!
+		</strong>
+	  </p>
 	<ol class="flex flex-col gap-y-size-lg">
 		{
 			repos.map((repo, i) => {

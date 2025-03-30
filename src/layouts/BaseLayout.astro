@@ -2,10 +2,13 @@
 import MenuBar from "../components/MenuBar/MenuBar.astro"
 import IncludeKatex from "../components/IncludeKatex.astro"
 import LoadFonts from '../components/font/LoadFonts.astro'
+import ExternalLinksScript from '../components/ExternalLinksScript.astro'
 
 import "../styles/global.css"
-// Importing the Nepal-inspired theme CSS - make sure this path is correct
+// Importing the Nepal-inspired theme CSS
 import "../styles/nepal-theme.css"
+// Import the theme modes CSS
+import "../styles/theme-modes.css"
 
 // og-image by slug
 const {
@@ -35,8 +38,14 @@ const ogImage = `https://sabinsubedi.com/og-images/default.svg`
 	</head>
 
 	<body
-		class="min-h-screen w-full bg-mountain-50 font-serif text-mountain-700 pb-size-lg"
+		class="min-h-screen w-full bg-mountain-50 font-serif text-mountain-700 pb-size-lg transition-colors duration-200"
 	>
+		<!-- Script to make external links open in new tabs -->
+		<ExternalLinksScript />
+    
+    <!-- Nepal flag background (remove this to have it) -->
+     <!-- <div class="nepal-flag-background"></div> -->
+    
 		<header class="content mountain-header dhaka-border relative">
 			<!-- Mountain silhouette background (hidden on mobile) -->
 			<div class="mountain-silhouette hidden md:block"></div>
