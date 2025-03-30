@@ -1,5 +1,5 @@
 ---
-// ThemeToggle.astro - Just the dark mode toggle
+// ThemeToggle.astro - Default to light mode
 ---
 
 <button
@@ -25,17 +25,21 @@
       <path d="M20 12h2"></path>
     </svg>
   </span>
-  <span class="text-xs dark:hidden">Dark Mode</span>
-  <span class="text-xs hidden dark:inline">Light Mode</span>
+  <span class="text-xs dark:hidden">Dark</span>
+  <span class="text-xs hidden dark:inline">Light</span>
 </button>
 
 <script>
-  // Initialize theme based on local storage or system preference
+  // Initialize theme based on local storage or default to light mode
   function initializeTheme() {
-    const isDarkMode = localStorage.getItem('theme') === 'dark' || 
-      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    // Only apply dark mode if explicitly set to 'dark' in localStorage
+    const isDarkMode = localStorage.getItem('theme') === 'dark';
     
-    document.documentElement.classList.toggle('dark', isDarkMode);
+    // Remove any class first to ensure clean state, then add 'dark' if needed
+    document.documentElement.classList.remove('dark');
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
   }
 
   // Initialize on page load
