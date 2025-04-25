@@ -37,12 +37,22 @@ const socialLinks: SocialLink[] = [
 // You can pass a class name as a prop
 interface Props {
   className?: string;
+  variant?: 'header' | 'profile';
 }
 
-const { className = "flex space-x-4" } = Astro.props;
+const { 
+  className = "flex space-x-4", 
+  variant = 'header' 
+} = Astro.props;
+
+// Additional classes based on variant
+const variantClasses = variant === 'profile' 
+  ? "justify-center mt-4" 
+  : "";
 ---
 
-<div class={className}>
+
+<div class={`${className} ${variantClasses}`}>
   {socialLinks.map(link => (
     <a 
       href={link.url} 

@@ -2,21 +2,31 @@
 import MenuItemsInline from "./MenuItemsInline.astro";
 import SocialItems from "./SocialItems.astro";
 import ThemeToggle from "../ThemeToggle.astro";
+
+// Add a prop to determine if this is the home page
+interface Props {
+  isHomePage?: boolean;
+}
+
+const { isHomePage = false } = Astro.props;
 ---
 
-<nav
-  class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs">
+
+
+
+
+<nav class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs">
   <div class="flex flex-wrap items-center justify-between">
-    <h1 class="text-size-2 md:text-size-3 font-bold text-mountain-700 flex items-center">
+    <h1 class="text-size-2 md:text-size-1 font-bold text-mountain-700 flex items-center">
       <a href="/" class="hover:text-dhaka-red transition-colors flex items-center gap-2">
         Sabin Subedi
         <img src="/images/nepal-flag-mini.png" alt="Nepal Flag" class="h-5 md:h-6 w-auto" />
       </a>
     </h1>
 
-    <div class="flex items-center gap-size-2xs-xs">
+    <div class="flex flex-col items-end gap-10 h-[60px]">
       <ThemeToggle />
-      <SocialItems />
+      {!isHomePage && <SocialItems />}
     </div>
   </div>
 

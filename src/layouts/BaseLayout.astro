@@ -4,6 +4,10 @@ import IncludeKatex from "../components/IncludeKatex.astro"
 import LoadFonts from '../components/font/LoadFonts.astro'
 import ExternalLinksScript from '../components/ExternalLinksScript.astro'
 
+
+// Check if this is the home page
+const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
+
 import "../styles/global.css"
 // Importing the Nepal-inspired theme CSS
 import "../styles/nepal-theme.css"
@@ -46,12 +50,12 @@ const ogImage = `https://sabinsubedi.com/og-images/default.svg`
     <!-- Nepal flag background (remove this to have it) -->
      <!-- <div class="nepal-flag-background"></div> -->
     
-		<header class="content mountain-header dhaka-border relative">
-			<!-- Mountain silhouette background (hidden on mobile) -->
-			<div class="mountain-silhouette hidden md:block"></div>
-			
-			<MenuBar />
-		</header>
+	 <header class="content mountain-header dhaka-border relative">
+		<!-- Mountain silhouette background (hidden on mobile) -->
+		<div class="mountain-silhouette hidden md:block"></div>
+		
+		<MenuBar isHomePage={isHomePage} />
+	</header>
 
 		<!-- Main  -->
 		<slot />
