@@ -1,0 +1,18 @@
+{
+  "name": "Sabin Subedi",
+  "short_name": "Sabin",
+  "description": "Sabin Subedi - Applied Microeconomics & Development Economics",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#f8fafc",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "orientation": "any",
+  "categories": ["education", "economics", "research"]
+}

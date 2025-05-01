@@ -17,7 +17,39 @@ export default defineConfig({
         rehypePlugins: [rehypeKatex],
         gfm: true,
     },
-    integrations: [mdx(
-
-    ), tailwind(), solidJs()],
+    image: {
+        // Enable image optimization
+        service: {
+            entrypoint: 'astro/assets/services/sharp'
+        },
+        // Set reasonable defaults for image optimization
+        defaults: {
+            quality: 80,
+            format: 'webp'
+        }
+    },
+    integrations: [mdx(), tailwind(), solidJs()],
+    output: 'static',
+    build: {
+        // Directory for build assets
+        assets: '_assets',
+        // Inline small CSS and JavaScript files
+        inlineStylesheets: 'auto',
+    },
+    vite: {
+        build: {
+            // Enable CSS code splitting
+            cssCodeSplit: true,
+            // Enable minification
+            minify: 'terser',
+            // Configure chunk size optimization
+            rollupOptions: {
+                output: {
+                    manualChunks: {
+                        'vendor': ['solid-js']
+                    }
+                }
+            }
+        }
+    }
 })

@@ -1,71 +1,95 @@
 ---
 import { getCollection } from "astro:content"
-import Block from "../../components/Block.astro"
-import BaseLayout from "../../layouts/BaseLayout.astro"
+import Layout from "../../layouts/Layout.astro"
+import NewsletterSubscribe from "../../components/blog/NewsletterSubscribe.astro"
+import "../../styles/blog-content.css"
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog")
-	return posts
-		.filter((post) => !post.data.draft)
-		.map((post) => {
-			return {
-				params: { slug: post.slug },
-				props: { post },
-			}
-		})
+  const posts = await getCollection("blog")
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }))
 }
 
 const { post } = Astro.props
 const { Content } = await post.render()
-let authors = post.data.author
-authors = authors.sort((a, b) => {
-	const aLastName = a.name.split(" ").slice(-1)[0]
-	const bLastName = b.name.split(" ").slice(-1)[0]
-	return aLastName.localeCompare(bLastName)
-})
-let dateText = new Date(post.data.date).toLocaleDateString("en-US", {
-	year: "numeric",
-	month: "long",
-})
+
+// Generate SEO metadata
+const title = `${post.data.title} | Sabin Subedi`
+const description = post.data.description
+const type = "article"
+const authorName = post.data.author?.[0]?.name || "Sabin Subedi"
+const authorUrl = post.data.author?.[0]?.url || "https://sabinsubedi.com"
+const publishDate = new Date(post.data.date).toISOString()
+
+// Structured data for the blog post
+const articleStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "author": {
+    "@type": "Person",
+    "name": authorName,
+    "url": authorUrl
+  },
+  "datePublished": publishDate,
+  "dateModified": publishDate,
+  "publisher": {
+    "@type": "Person",
+    "name": "Sabin Subedi",
+    "url": "https://sabinsubedi.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://sabinsubedi.com/blog/${post.slug}`
+  }
+}
 ---
 
-<BaseLayout slug={post.slug} katex>
-	<Block prose flow>
-		<h1
-			class="mt-size-lg font-white cursor-pointer text-size-3 font-bold"
-			set:html={post.data.title}
-		/>
+<Layout
+  title={title}
+  description={description}
+  type={type}
+  content
+>
+  <article class="blog-content">
+    <header class="mb-size-lg">
+      <h1 class="p-name">{post.data.title}</h1>
+      <div class="flex items-center gap-2 text-zinc-500 mt-4">
+        <time class="dt-published" datetime={post.data.date}>
+          {new Date(post.data.date).toLocaleDateString("en-US", { 
+            year: "numeric", 
+            month: "long",
+            day: "numeric"
+          })}
+        </time>
+        {post.data.author && (
+          <>
+            <span>•</span>
+            <a href={authorUrl} class="p-author h-card hover:text-dhaka-red">{authorName}</a>
+          </>
+        )}
+      </div>
+    </header>
 
-		<p class="mt-size-3xs text-size--1 text-zinc-400">
-			<time datetime={post.data.date}>
-				{dateText}
-			</time>
-		</p>
+    <div class="e-content mt-8">
+      <Content />
+    </div>
 
-		<p class="mb-size-lg">
-			{
-				authors.map((author, i) => {
-					let sep = ""
-					if (authors.length > 1 && i > 0 && i < authors.length - 1) {
-						sep = ", "
-					}
-					if (authors.length > 2 && i == authors.length - 2) {
-						sep = ", and "
-					}
-					if (authors.length == 2 && i == authors.length - 2) {
-						sep = " and "
-					}
+    <div class="mt-size-xl">
+      <NewsletterSubscribe />
+    </div>
 
-					return (
-						<Fragment>
-							<a href={author.url}>{author.name}</a>
-							{sep}
-						</Fragment>
-					)
-				})
-			}
-		</p>
+    {post.data.substackLink && (
+      <footer class="mt-size-xl pt-size-sm border-t border-zinc-200">
+        <p class="text-zinc-500">
+          This post was originally published on <a href={post.data.substackLink} class="text-dhaka-red hover:text-dhaka-red-dark">Substack</a>.
+        </p>
+      </footer>
+    )}
+  </article>
+</Layout>
 
-		<Content />
-	</Block>
-</BaseLayout>
+<script type="application/ld+json" set:html={JSON.stringify(articleStructuredData)} />

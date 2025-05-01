@@ -122,17 +122,23 @@ author:
 date: "${formattedDate}"
 categories: ${JSON.stringify(categories)}
 draft: false
+substackLink: "${link}"
 ---`;
 
-      let excerpt = (content || description).replace(/<[^>]*>?/gm, '');
-      excerpt = excerpt.substring(0, 500) + '...';
-
+      // Clean and format the content
+      let fullContent = content || description;
+      
+      // Remove any script tags and their contents
+      fullContent = fullContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+      
       const fileContent = `${frontmatter}
 
-${excerpt}
+${fullContent}
 
-[Read the full post on Substack](${link})
-      `;
+---
+
+> This post was originally published on [Substack](${link}). If you enjoyed this content, consider [subscribing to my newsletter](${SUBSTACK_URL}) for regular updates.
+`;
       
       const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
       

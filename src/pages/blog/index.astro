@@ -1,28 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro"
 import BlogListCard from "../../components/blog/BlogListCard.jsx"
+import NewsletterSubscribe from "../../components/blog/NewsletterSubscribe.astro"
 import { getCollection } from "astro:content"
+
 let posts_unsorted = await getCollection("blog")
 
-console.log("Total posts found:", posts_unsorted.length);
-if (posts_unsorted.length > 0) {
-  console.log("First post slug:", posts_unsorted[0].slug);
-  console.log("First post data:", posts_unsorted[0].data);
-}
+let posts = posts_unsorted
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .filter((post) => post.data.draft != true)
 
-let posts = posts_unsorted.sort((a, b) => {
-	let aDate = new Date(a.data.date)
-	let bDate = new Date(b.data.date)
-
-	// getTime is milliseconds since Jan 1, 1970, 00:00:00.000 GMT
-	return bDate.getTime() - aDate.getTime()
-})
-posts = posts.filter((post) => post.data.draft != true)
-console.log("Posts after filtering:", posts.length);
+// SEO metadata
+const title = "Blog | Sabin Subedi"
+const description = "Thoughts and insights on economics, causal inference, and development economics from Sabin Subedi."
 ---
 
-<Layout content prose>
+<Layout 
+  title={title}
+  description={description}
+  type="blog"
+  content
+>
+  <NewsletterSubscribe class="mb-size-lg" />
+  
   <ul class="flex flex-col gap-y-size-sm">
     {posts.map((post, i) => <BlogListCard post={post} />)}
   </ul>
 </Layout>
+
+<script>
+  // Initialize intersection observer for blog post animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('opacity-0', 'translate-y-4');
+        observer.unobserve(entry.target); // Stop observing once animation is triggered
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  });
+
+  // Observe all blog items
+  document.querySelectorAll('[data-blog-item]').forEach(item => {
+    observer.observe(item);
+  });
+</script>

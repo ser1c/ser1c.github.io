@@ -2,33 +2,35 @@
 import MenuItemsInline from "./MenuItemsInline.astro";
 import SocialItems from "./SocialItems.astro";
 import ThemeToggle from "../ThemeToggle.astro";
-
-// Add a prop to determine if this is the home page
-interface Props {
-  isHomePage?: boolean;
-}
+import { Image } from 'astro:assets';
+import nepalFlag from '/public/images/nepal-flag-mini.png';
 
 const { isHomePage = false } = Astro.props;
 ---
 
-
-
-
-
-<nav class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs">
-  <div class="flex flex-wrap items-center justify-between">
-    <h1 class="text-size-2 md:text-size-1 font-bold text-mountain-700 flex items-center">
-      <a href="/" class="hover:text-dhaka-red transition-colors flex items-center gap-2">
-        Sabin Subedi
-        <img src="/images/nepal-flag-mini.png" alt="Nepal Flag" class="h-5 md:h-6 w-auto" />
+<nav class="flex w-full flex-col justify-between gap-size-2xs pb-size-2xs nepal-border" aria-label="Main navigation">
+  <div class="flex flex-wrap items-center justify-between relative z-10">
+    <h1 class="text-size-1 font-bold">
+      <a href="/" class="hover:text-dhaka-red transition-all duration-300 flex items-center gap-2 group" aria-label="Sabin Subedi's Homepage">
+        <span class="group-hover:translate-x-1 transition-transform duration-300">Sabin Subedi</span>
+        <Image 
+          src={nepalFlag} 
+          alt="Nepal Flag"
+          class="h-5 md:h-6 w-auto transform group-hover:rotate-12 transition-transform duration-300" 
+          width={24}
+          height={24}
+          loading="eager"
+          decoding="sync"
+        />
       </a>
     </h1>
 
-    <div class="flex flex-col items-end gap-10 h-[60px]">
+    <div class="flex items-center gap-size-2xs-xs">
       <ThemeToggle />
-      {!isHomePage && <SocialItems />}
     </div>
   </div>
 
-  <MenuItemsInline />
+  <div class="relative z-10">
+    <MenuItemsInline isHomePage={isHomePage} />
+  </div>
 </nav>

@@ -1,4 +1,12 @@
 ---
+import SocialItems from "./SocialItems.astro";
+
+interface Props {
+  isHomePage?: boolean;
+}
+
+const { isHomePage = false } = Astro.props;
+
 const items = [
   { name: "Research", link: "/papers/" },
   { name: "Teaching", link: "/teaching/" },
@@ -7,10 +15,35 @@ const items = [
 ];
 ---
 
-<ul class="gap-size-xs-sm flex flex-wrap text-size-0 font-light">
-  {items.map((item) => (
-    <li class="relative">
-      <a href={item.link} class="nav-link text-mountain-600 hover:text-dhaka-red transition-colors">{item.name}</a>
-    </li>
-  ))}
-</ul>
+<div class="flex flex-row place-content-between text-size-0 font-light">
+  <ul class="flex gap-size-xs-sm" role="menubar" aria-label="Main menu">
+    {items.map((item) => (
+      <li class="relative group" role="none">
+        <a
+          href={item.link}
+          class="nav-link px-2 py-1 rounded-sm hover:text-dhaka-red transition-all duration-300 relative overflow-hidden"
+          role="menuitem"
+          aria-current={Astro.url.pathname.startsWith(item.link) ? 'page' : undefined}
+        >
+          <span class="relative z-10">{item.name}</span>
+          <span class="absolute inset-0 bg-mountain-100 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-sm"></span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  {!isHomePage && (
+    <SocialItems 
+      className="flex items-center gap-3 social-links" 
+    />
+  )}
+</div>
+
+<style>
+  .social-links a {
+    transition: transform 0.3s ease;
+  }
+  .social-links a:hover {
+    transform: translateY(-2px);
+  }
+</style>

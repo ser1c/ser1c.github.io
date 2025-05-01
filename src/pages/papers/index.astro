@@ -7,101 +7,128 @@ let papers_unsorted = await getCollection("papers")
 
 let papers = papers_unsorted
 	.map((paper) => {
-		if (paper.data.categories?.includes("Published")) {
-			paper.data.order = 5
-		} else if (paper.data.categories?.includes("R&R")) {
-			paper.data.order = 4
-		} else if (paper.data.categories?.includes("Submitted")) {
-			paper.data.order = 3
-		} else if (paper.data.categories?.includes("Working Paper")) {
-			paper.data.order = 2
-		} else if (paper.data.categories?.includes("Work in Progress")) {
-			paper.data.order = 1
-		} else {
-			paper.data.order = 0
-		}
-
-		return paper
+		const categoryOrder = {
+			"Published": 5,
+			"R&R": 4,
+			"Submitted": 3,
+			"Working Paper": 2,
+			"Work in Progress": 1
+		};
+		// Handle undefined case with nullish coalescing
+		paper.data.order = paper.data.categories?.reduce((order, category) => 
+			Math.max(order, categoryOrder[category] || 0), 0) ?? 0;
+		return paper;
 	})
 	.sort((a, b) => {
-		if (a.data.order == b.data.order) {
-			let aDate = new Date(a.data.date)
-			let bDate = new Date(b.data.date)
-
-			// getTime is milliseconds since Jan 1, 1970, 00:00:00.000 GMT
-			return -1 * (aDate.getTime() - bDate.getTime())
-		} else {
-			return -1 * (a.data.order - b.data.order)
+		if (a.data.order === b.data.order) {
+			return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 		}
-	})
+		return b.data.order - a.data.order;
+	});
 
-let publishedPapers = papers.filter((paper) => paper.data.order == 5)
-let workingPapers = papers.filter(
-	(paper) => paper.data.order < 5 && paper.data.order >= 2
-)
-let workInProgress = papers.filter((paper) => paper.data.order < 2)
+let publishedPapers = papers.filter(paper => paper.data.order === 5);
+let workingPapers = papers.filter(paper => paper.data.order < 5 && paper.data.order >= 2);
+let workInProgress = papers.filter(paper => paper.data.order < 2);
+
+// SEO metadata
+const title = "Research Papers | Sabin Subedi"
+const description = "Research papers in applied microeconomics and development economics by Sabin Subedi, focusing on health economics, migration, earthquake and remittances in developing countries."
 ---
 
-<Layout>
-	<h2
-		class="text-zinc-700 text-size-1 border-b-2 border-dashed border-zinc-200 py-size-2xs"
-	>
-		Publications
-	</h2>
-	<ol class="flex flex-col gap-y-size-lg my-size-md">
-		{
-			publishedPapers.map((paper, i) => {
-				return (
-					<li class="grid grid-cols-[2em_1fr]">
-						<p class="text-size-0">{i + 1}. </p>
-						<div>
-							<PaperInfo data={paper.data} slug={paper.slug} />
-						</div>
-					</li>
-				)
-			})
-		}
-	</ol>
+<Layout 
+    title={title}
+    description={description}
+>
+	<div class="papers-container space-y-8" data-papers-section>
+		{publishedPapers.length > 0 && (
+			<section class="publications">
+				<h2 class="text-zinc-700 text-size-1 border-b-2 border-dashed border-zinc-200 py-size-2xs">
+					Publications
+				</h2>
+				<ol class="flex flex-col gap-y-size-lg my-size-md">
+					{publishedPapers.map((paper, i) => (
+						<li class="grid grid-cols-[2em_1fr] items-baseline" data-paper-item>
+							<p class="text-size-0">{i + 1}. </p>
+							<div>
+								<PaperInfo data={paper.data} slug={paper.slug} />
+							</div>
+						</li>
+					))}
+				</ol>
+			</section>
+		)}
 
-	<h2
-		class="text-zinc-700 text-size-1 border-b-2 border-dashed border-zinc-200 py-size-2xs"
-	>
-		Working Papers
-	</h2>
-	<ol class="flex flex-col gap-y-size-lg my-size-md">
-		{
-			workingPapers.map((paper, i) => {
-				return (
-					<li class="grid grid-cols-[2em_1fr]">
-						<p class="text-size-0">{i + 1}. </p>
-						<div>
-							<PaperInfo data={paper.data} slug={paper.slug} />
-						</div>
-					</li>
-				)
-			})
-		}
-	</ol>
+		{workingPapers.length > 0 && (
+			<section class="working-papers">
+				<h2 class="text-zinc-700 text-size-1 border-b-2 border-dashed border-zinc-200 py-size-2xs">
+					Working Papers
+				</h2>
+				<ol class="flex flex-col gap-y-size-lg my-size-md">
+					{workingPapers.map((paper, i) => (
+						<li class="grid grid-cols-[2em_1fr] items-baseline" data-paper-item>
+							<p class="text-size-0">{i + 1}. </p>
+							<div>
+								<PaperInfo data={paper.data} slug={paper.slug} />
+							</div>
+						</li>
+					))}
+				</ol>
+			</section>
+		)}
 
-	{
-		workInProgress.length > 0 && (
-			<>
+		{workInProgress.length > 0 && (
+			<section class="work-in-progress">
 				<h2 class="text-zinc-700 text-size-1 border-b-2 border-dashed border-zinc-200 py-size-2xs">
 					Work in Progress
 				</h2>
 				<ol class="flex flex-col gap-y-size-lg my-size-md">
-					{workInProgress.map((paper, i) => {
-						return (
-							<li class="grid grid-cols-[2em_1fr]">
-								<p class="text-size-0">{i + 1}. </p>
-								<div>
-									<PaperInfo data={paper.data} slug={paper.slug} />
-								</div>
-							</li>
-						)
-					})}
+					{workInProgress.map((paper, i) => (
+						<li class="grid grid-cols-[2em_1fr] items-baseline" data-paper-item>
+							<p class="text-size-0">{i + 1}. </p>
+							<div>
+								<PaperInfo data={paper.data} slug={paper.slug} />
+							</div>
+						</li>
+					))}
 				</ol>
-			</>
-		)
-	}
+			</section>
+		)}
+	</div>
 </Layout>
+
+<script>
+  // Initialize intersection observer for paper animations with optimized settings
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Add a small delay based on the element's position to create a cascade effect
+        const element = entry.target as HTMLElement;
+        const delay = element.getAttribute('data-index') ? 
+          parseInt(element.getAttribute('data-index') || '0') * 100 : 0;
+        setTimeout(() => {
+          entry.target.classList.remove('opacity-0', 'translate-y-4');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '50px', // Start loading slightly before the element is in view
+    threshold: 0.1
+  });
+
+  // Observe all paper items with optimized handling
+  const observeElements = () => {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('[data-paper-item]').forEach((item, index) => {
+        (item as HTMLElement).setAttribute('data-index', index.toString());
+        observer.observe(item);
+      });
+    });
+  };
+
+  // Initialize observers after page load
+  document.addEventListener('astro:page-load', observeElements);
+  // Also initialize for initial page load
+  observeElements();
+</script>

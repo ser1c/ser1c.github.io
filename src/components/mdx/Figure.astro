@@ -1,9 +1,14 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 }
-const { src, alt } = Astro.props
+
+const { src, alt, width, height } = Astro.props;
 const isSvg = src.endsWith(".svg");
 ---
 
@@ -11,7 +16,16 @@ const isSvg = src.endsWith(".svg");
   {isSvg ? (
     <object data={src} type="image/svg+xml" class="w-full"></object>
   ) : (
-    <img src={src} alt={alt} class="w-full" />
+    <Image 
+      src={src}
+      alt={alt}
+      width={width || 800}
+      height={height || 600}
+      class="w-full"
+      loading="lazy"
+      format="webp"
+      quality={80}
+    />
   )}
   <figcaption class="text-xl mt-size-2xs">
     <b>Figure:</b> {alt}

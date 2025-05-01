@@ -1,24 +1,39 @@
-export default function BlogCard({ post }) {
-  // 2023-02-17 -> February 17th, 2023
-  let dateText = new Date(post.data.date).toLocaleDateString("en-US", { year: "numeric", month: "long" });
+export default function BlogListCard({ post }) {
+  const publishDate = new Date(post.data.date);
 
   return (
-    <li class="border-l-2 border-zinc-200 hover:border-zinc-800 px-4 py-2">
-      
-      <h2
-        class="font-white cursor-pointer text-size-1 font-bold"
-      >
-        <a href={`/blog/${post.slug}`} innerHTML={post.data.title}></a>
-      </h2>
-      
-      <p class="mt-size-3xs text-size--1 text-zinc-400" ><time datetime={post.data.date}>
-        {dateText}
-      </time></p>
-
-      <p 
-        innerHTML={post.data.description} 
-        class="mt-size-2xs md:mt-size-xs text-size--1" 
-      ></p>
+    <li className="opacity-0 translate-y-4 transition-all duration-500 group" data-blog-item>
+      <a href={`/blog/${post.slug}`} className="block p-4 -mx-4 rounded-lg hover:bg-mountain-50/50 relative overflow-hidden">
+        <div className="relative z-10">
+          <h2 className="font-bold text-size-0 text-zinc-800 group-hover:text-dhaka-red transition-colors">
+            {post.data.title}
+          </h2>
+          
+          <div className="flex items-center gap-2 text-zinc-500 mt-2 text-size--1">
+            <time dateTime={post.data.date}>
+              {publishDate.toLocaleDateString("en-US", { 
+                year: "numeric", 
+                month: "long",
+                day: "numeric"
+              })}
+            </time>
+            {post.data.author && (
+              <>
+                <span>•</span>
+                <span>{post.data.author[0]?.name || "Sabin Subedi"}</span>
+              </>
+            )}
+          </div>
+          
+          {post.data.description && (
+            <p className="mt-2 text-size--1 text-mountain-600 line-clamp-2">
+              {post.data.description}
+            </p>
+          )}
+        </div>
+        
+        <div className="absolute left-0 top-0 w-1 h-0 bg-dhaka-red transition-all duration-300 group-hover:h-full"></div>
+      </a>
     </li>
   );
 }

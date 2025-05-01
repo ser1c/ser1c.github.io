@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import substackLogo from '/public/images/logo_substack.png';
+const { class: className } = Astro.props;
+---
+
+<div class={`bg-zinc-100 dark:bg-zinc-800 p-6 rounded-lg ${className}`}>
+  <div class="flex items-center justify-between">
+    <div class="flex-1">
+      <h3 class="text-size-1 font-bold mb-4">Subscribe to My Substack</h3>
+      <p class="mb-4">Get the latest posts delivered directly to your inbox. No spam, unsubscribe at any time. All the posts below are fetched from substack, for better reading experience head over there</p>
+      <a 
+        href="https://sabinsubedi.substack.com"
+        class="inline-block px-6 py-3 bg-dhaka-red hover:bg-dhaka-red-dark text-white rounded-lg transition-colors duration-200"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Subscribe Now
+      </a>
+    </div>
+    <div class="ml-6 hidden md:block">
+      <Image 
+        src={substackLogo}
+        alt="Substack Logo"
+        width={100}
+        height={100}
+        class="opacity-90"
+      />
+    </div>
+  </div>
+</div>

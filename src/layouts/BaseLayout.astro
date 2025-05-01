@@ -4,67 +4,163 @@ import IncludeKatex from "../components/IncludeKatex.astro"
 import LoadFonts from '../components/font/LoadFonts.astro'
 import ExternalLinksScript from '../components/ExternalLinksScript.astro'
 
-
 // Check if this is the home page
 const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
 
 import "../styles/global.css"
-// Importing the Nepal-inspired theme CSS
 import "../styles/nepal-theme.css"
-// Import the theme modes CSS
 import "../styles/theme-modes.css"
 
-// og-image by slug
 const {
-  description = "Sabin Subedi - Applied Microeconomics & Development Economics", // Your custom default description
+  title = "Sabin Subedi - Applied Microeconomics & Development Economics",
+  description = "Sabin Subedi - Applied Microeconomics & Development Economics",
   katex = false,
+  image = `https://sabinsubedi.com/og-images/default.svg`,
+  type = "website",
+  canonicalURL = new URL(Astro.url.pathname, "https://sabinsubedi.com").toString(),
 } = Astro.props
-const ogImage = `https://sabinsubedi.com/og-images/default.svg`
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
+		<script is:inline>
+			// Prevent FOUC (Flash of Unstyled Content)
+			(function() {
+				const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+				document.documentElement.classList.add('theme-transitioning');
+				document.documentElement.classList.toggle('dark', theme === 'dark');
+			})();
+		</script>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<title>Sabin Subedi</title>
+		
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="title" content={title} />
 		<meta name="description" content={description} />
-		<meta property="og:image" content={ogImage} />
-		<meta property="twitter:image" content={ogImage} />
+		<link rel="canonical" href={canonicalURL} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
+		<meta property="og:site_name" content="Sabin Subedi" />
+		
+		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Sabin Subedi" />
+		<meta name="twitter:url" content={canonicalURL} />
+		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} />
+		
+		<!-- Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": "Sabin Subedi",
+			"url": "https://sabinsubedi.com",
+			"image": "https://sabinsubedi.com/images/headshot_small.jpeg",
+			"sameAs": [
+				"https://github.com/ser1c",
+				"https://substack.com/@sabinsubedi"
+			],
+			"jobTitle": "PhD Student in Economics",
+			"worksFor": {
+				"@type": "EducationalOrganization",
+				"name": "University of Strathclyde",
+				"url": "https://www.strath.ac.uk",
+			},
+			"knowsAbout": [
+				"Applied Microeconomics",
+				"Development Economics",
+				"Causal Inference",
+				"Economics Research"
+			],
+			"alumniOf": {
+				"@type": "EducationalOrganization",
+				"name": "University of Strathclyde"
+			}
+		})} />
+
+		<!-- Preload critical fonts -->
+		<link 
+			rel="preload" 
+			href="/fonts/LinuxLibertine_Regular.woff" 
+			as="font" 
+			type="font/woff" 
+			crossorigin="anonymous"
+		/>
+		<link 
+			rel="preload" 
+			href="/fonts/LinuxLibertine_Bold.woff" 
+			as="font" 
+			type="font/woff" 
+			crossorigin="anonymous"
+		/>
+
+		<!-- DNS Prefetch and preconnect -->
+		<link rel="dns-prefetch" href="//sabinsubedi.com" />
+		<link rel="preconnect" href="https://sabinsubedi.com" />
+
+		<!-- Add resource hints for critical stylesheets -->
+		<link rel="preload" href="/styles/global.css" as="style" />
+		<link rel="preload" href="/styles/nepal-theme.css" as="style" />
+		<link rel="preload" href="/styles/theme-modes.css" as="style" />
+
+		<!-- Performance metadata -->
+		<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+		<link rel="manifest" href="/manifest.json" />
 
     <LoadFonts />
-    <!-- Include katex --> 
-		{katex && <IncludeKatex />}
+    {katex && <IncludeKatex />}
+
+		<!-- Prevent theme flash -->
+		<script is:inline>
+			// Inline this script to prevent flash of incorrect theme
+			const theme = (() => {
+				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+					return localStorage.getItem('theme');
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark';
+				}
+				return 'light';
+			})();
+			if (theme === 'light') {
+				document.documentElement.classList.remove('dark');
+			} else {
+				document.documentElement.classList.add('dark');
+			}
+		</script>
 	</head>
 
 	<body
 		class="min-h-screen w-full bg-mountain-50 font-serif text-mountain-700 pb-size-lg transition-colors duration-200"
 	>
-		<!-- Script to make external links open in new tabs -->
 		<ExternalLinksScript />
     
-    <!-- Nepal flag background (remove this to have it) -->
-     <!-- <div class="nepal-flag-background"></div> -->
-    
-	 <header class="content mountain-header dhaka-border relative">
-		<!-- Mountain silhouette background (hidden on mobile) -->
-		<div class="mountain-silhouette hidden md:block"></div>
-		
-		<MenuBar isHomePage={isHomePage} />
-	</header>
+		<header class="content mountain-header dhaka-border">
+			<div class="mountain-silhouette"></div>
+			<div class="relative z-10">
+				<MenuBar isHomePage={isHomePage} />
+			</div>
+		</header>
 
-		<!-- Main  -->
-		<slot />
+		<main class="mt-8 relative z-10">
+			<slot />
+		</main>
 
-	<!-- Nepal-inspired footer -->
-<footer class="py-8 mt-12 nepal-footer">
-	<div class="max-w-prose mx-auto text-center">
-	  <p class="text-mountain-500 font-serif text-size--1">© {new Date().getFullYear()} Sabin Subedi. All rights reserved.</p>
-	</div>
-  </footer>
+		<footer class="py-8 mt-12 nepal-footer relative z-10">
+			<div class="max-w-prose mx-auto text-center">
+				<p class="text-mountain-500 font-serif text-size--1">
+					© {new Date().getFullYear()} Sabin Subedi. The theme is inspired from Dhaka fabric from Nepal <span class="text-dhaka-red">♥</span> 
+				</p>
+			</div>
+		</footer>
 	</body>
 </html>

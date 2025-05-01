@@ -14,16 +14,36 @@ export async function getStaticPaths() {
 
 const { paper } = Astro.props
 const { Content } = await paper.render()
+
+// Generate SEO metadata
+const title = `${paper.data.title} | Sabin Subedi`
+const description = paper.data.summary || "Research paper by Sabin Subedi"
 ---
 
-<BaseLayout slug={paper.slug} katex>
+
+
+
+<BaseLayout 
+    title={title}
+    description={description}
+    type="article"
+    katex
+>
 	<Block>
-    <div class="border-l-[2px] border-zinc-800 px-4 py-2">
-      <PaperInfo data={paper.data} includeSummary />
-    </div>
+		<div class="flex items-center mb-6 relative z-10">
+			<a 
+				href="/papers" 
+				class="inline-flex items-center px-4 py-2 text-size--1 text-alice-500 border border-alice-500 rounded hover:bg-alice-500 hover:text-white transition-colors duration-200"
+			>
+				<span class="mr-2">←</span> Back to Papers
+			</a>
+		</div>
+		<div class="border-l-[2px] border-zinc-800 dark:border-zinc-200 px-4 py-2 relative z-10">
+			<PaperInfo data={paper.data} includeSummary noAnimation />
+		</div>
 	</Block>
-	<div class="mt-size-2xl"></div>
-	<Block prose flow>
-    <Content />
-  </Block>
+	<div class="mt-size-sm"></div>
+	<Block prose flow class="prose prose-zinc dark:prose-invert relative z-10">
+		<Content />
+	</Block>
 </BaseLayout>

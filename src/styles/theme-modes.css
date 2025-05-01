@@ -1,8 +1,52 @@
+/* Add transition classes at the start of the file */
+:root {
+  color-scheme: light;
+  --bg-gradient: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --bg-gradient: linear-gradient(to bottom, #0f172a, #1e293b);
+}
+
+/* Block transitions during page load */
+html.theme-transitioning * {
+  transition: none !important;
+}
+
+/* Apply transitions only after theme is set */
+html:not(.theme-transitioning) * {
+  transition: background-color 0.3s ease-in-out,
+              border-color 0.3s ease-in-out,
+              color 0.3s ease-in-out,
+              box-shadow 0.3s ease-in-out,
+              opacity 0.3s ease-in-out,
+              transform 0.3s ease-in-out;
+}
+
+/* Disable transitions on page load */
+.theme-transitioning {
+  transition: none !important;
+}
+
+/* Smooth transition handling */
+:root:not(.theme-transitioning) * {
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 400ms;
+}
+
 /* theme-modes.css - Add this to your styles directory */
 
 /* Dark mode styles */
 .dark {
   color-scheme: dark;
+  --mountain-shadow: #1e293b;
+  --mountain-slate: #334155;
+  --snow-white: #f1f5f9;
+  
+  background: var(--bg-gradient);
+  color: var(--snow-white);
 }
 
 .dark body {
@@ -51,6 +95,53 @@
   background-color: rgba(30, 41, 59, 0.5); /* mountain-700 with opacity */
   color: #f8fafc; /* mountain-50 */
   border-color: #b91c1c; /* dhaka-red */
+}
+
+/* Nepal-inspired dark mode styles */
+.dark .mountain-header {
+  background: linear-gradient(to bottom, #1e293b, #0f172a);
+  border-color: var(--color-dhaka-red);
+}
+
+.dark .mountain-silhouette {
+  opacity: 0.15;
+  filter: invert(1);
+}
+
+.dark .nav-link:hover {
+  text-shadow: 0 0 8px rgba(185, 28, 28, 0.3);
+}
+
+/* Enhanced focus styles for dark mode */
+.dark :focus-visible {
+  outline: 2px solid var(--color-dhaka-red);
+  outline-offset: 2px;
+}
+
+/* Dark mode paper and blog card enhancements */
+.dark .paper-info:hover,
+.dark .blog-content blockquote {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--mountain-shadow);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--mountain-slate);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dhaka-red);
 }
 
 /* Colorblind mode styles - Deuteranopia friendly palette */
@@ -232,4 +323,32 @@
 .theme-toggle span,
 .colorblind-toggle span {
   font-weight: 500;
+}
+
+/* Paper content specific styles */
+.dark .prose {
+  color: #f8fafc !important;
+}
+
+.dark .prose p,
+.dark .prose li,
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: #f8fafc !important;
+}
+
+.dark .prose strong {
+  color: #e2e8f0 !important;
+}
+
+.dark .prose a {
+  color: #60a5fa !important;
+}
+
+.dark .prose a:hover {
+  color: #93c5fd !important;
 }

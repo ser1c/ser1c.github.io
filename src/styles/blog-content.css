@@ -1,0 +1,234 @@
+/* Blog post content styling */
+.blog-content {
+  max-width: 120ch;
+  margin: 0 auto;
+  padding: 0 var(--size-md);
+  font-size: var(--size-0);  /* Using fluid typography */
+  line-height: 1.75;
+  font-family: inherit;
+}
+
+.blog-content h1 {
+  font-size: var(--size-4);  /* Larger heading */
+  font-weight: 700;
+  margin-bottom: var(--size-lg);
+  color: var(--color-mountain-800);
+  position: relative;
+}
+
+.blog-content h1::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 3em;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-dhaka-red) 0%, var(--color-dhaka-red) 50%, transparent 100%);
+}
+
+.blog-content h2 {
+  font-size: var(--size-2);  /* Larger subheading */
+  font-weight: 700;
+  margin-top: var(--size-xl);
+  margin-bottom: var(--size-md);
+  color: var(--color-mountain-700);
+  position: relative;
+}
+
+.blog-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -0.3rem;
+  left: 0;
+  width: 2em;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-dhaka-red) 0%, var(--color-dhaka-red) 30%, transparent 100%);
+}
+
+.blog-content h3 {
+  font-size: var(--size-1);
+  font-weight: 700;
+  margin-top: var(--size-lg);
+  margin-bottom: var(--size-sm);
+  color: var(--color-mountain-600);
+}
+
+.blog-content p {
+  margin: var(--size-md) 0;  /* More vertical spacing */
+  color: var(--color-mountain-700);
+  line-height: 1.75;
+}
+
+/* Links */
+.blog-content a {
+  color: var(--dhaka-red);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.blog-content a:hover {
+  text-decoration-thickness: 2px;
+  color: var(--color-dhaka-red-dark);
+}
+
+/* Unordered lists */
+.blog-content ul {
+  margin: var(--size-xs) 0;
+  padding-left: var(--size-xs);
+}
+
+.blog-content ul li {
+  position: relative;
+  padding-left: var(--size-2xs);
+  margin-bottom: var(--size-3xs);
+}
+
+.blog-content ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-dhaka-red);
+  border-radius: 2px;
+  transform: rotate(-45deg);
+}
+
+/* Numbered lists styling */
+.blog-content ol {
+  list-style-type: decimal;
+  margin: var(--size-md) 0;
+  padding-left: var(--size-xl);
+}
+
+.blog-content ol li {
+  margin-bottom: var(--size-sm);
+  padding-left: var(--size-xs);
+}
+
+/* Nested lists */
+.blog-content ol ol {
+  list-style-type: lower-alpha;
+  margin-top: var(--size-xs);
+  margin-bottom: 0;
+}
+
+/* Blockquote styling with Dhaka red line */
+.blog-content blockquote {
+  margin: var(--size-lg) 0;
+  padding: var(--size-md);
+  border-left: 4px solid var(--dhaka-red);
+  background-color: var(--color-mountain-50);
+  font-style: italic;
+  color: var(--color-mountain-600);
+}
+
+/* Large blockquotes with mountain pattern */
+.blog-content blockquote.large {
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-content blockquote.large::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(45deg, var(--color-mountain-100) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--color-mountain-100) 25%, transparent 25%);
+  background-size: 20px 20px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.blog-content pre {
+  margin: var(--size-sm) 0;
+  padding: var(--size-xs);
+  background-color: var(--color-mountain-900);
+  color: var(--color-mountain-50);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.blog-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  background-color: var(--color-mountain-100);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.blog-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Math/LaTeX content */
+.blog-content .math-display {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  padding: 1rem 0;
+}
+
+.blog-content .math-inline {
+  padding: 0 0.2em;
+}
+
+/* Tables */
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.blog-content th,
+.blog-content td {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+}
+
+.blog-content th {
+  background-color: var(--color-th-bg);
+  font-weight: 600;
+}
+
+/* Dark mode adjustments */
+:root[class~="dark"] .blog-content {
+  --color-heading: #e5e7eb;
+  --color-text-light: #a0aec0;
+  --color-link: #60a5fa;
+  --color-link-hover: #93c5fd;
+  --color-blockquote-bg: rgba(255, 255, 255, 0.05);
+  --color-code-bg: #1e1e1e;
+  --color-inline-code-bg: rgba(255, 255, 255, 0.1);
+  --color-border: #374151;
+  --color-th-bg: rgba(255, 255, 255, 0.05);
+  --color-accent: #4a5568;
+  --color-text: #e2e8f0;
+}
+
+/* Light mode colors */
+:root:not([class~="dark"]) .blog-content {
+  --color-heading: #111827;
+  --color-text-light: #4a5568;
+  --color-link: #2563eb;
+  --color-link-hover: #1d4ed8;
+  --color-blockquote-bg: rgba(0, 0, 0, 0.03);
+  --color-code-bg: #f3f4f6;
+  --color-inline-code-bg: rgba(0, 0, 0, 0.05);
+  --color-border: #e5e7eb;
+  --color-th-bg: rgba(0, 0, 0, 0.02);
+  --color-accent: #e2e8f0;
+  --color-text: #2d3748;
+}
+
+/* Prose class styles */
+.blog-content .prose {
+  max-width: none; /* Remove any max-width constraints */
+  width: 100%;
+}

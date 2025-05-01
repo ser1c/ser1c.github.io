@@ -1,36 +1,20 @@
-/* main, header, article {
-	--content-width: 1024px;
+:root {
+  --content-text: var(--color-zinc-800);
+  --content-bg: var(--color-mountain-50);
 }
 
-.content {
-	@apply text-zinc-800 my-size-md;
-	--flow-space: var(--size-sm);
-	display: grid;
-	grid-template-columns: var(--size-2xs-xs) var(--size-2xs-xs) min(
-			var(--content-width),
-			calc(100% - 4 * var(--size-2xs-xs))
-		) var(--size-2xs-xs) var(--size-2xs-xs);
-	padding: 0;
+:root.dark {
+  --content-text: var(--color-mountain-50);
+  --content-bg: var(--color-mountain-900);
 }
-@media (min-width: 1024px) {
-	.content {
-		grid-template-columns: 2fr 1fr min(var(--content-width), 100%) 1fr 2fr;
-		padding: 0;
-	}
-}
-@media (min-width: 1300px) {
-	.content {
-		grid-template-columns: 2fr 138px min(var(--content-width), 100%) 138px 2fr;
-		padding: 0;
-	}
-} */
 
 main, header, article {
-	--content-width: 768px;
+	--content-width: 120ch;  /* Increased from 85ch */
 }
 
 .content {
-	@apply text-zinc-800 my-size-md;
+	color: var(--content-text);
+	margin: var(--size-md) 0;
 	--flow-space: var(--size-sm);
 	display: grid;
 	grid-template-columns: var(--size-2xs-xs) var(--size-2xs-xs) min(
@@ -39,12 +23,14 @@ main, header, article {
 		) var(--size-2xs-xs) var(--size-2xs-xs);
 	padding: 0;
 }
+
 @media (min-width: 768px) {
 	.content {
 		grid-template-columns: 2fr 1fr min(var(--content-width), 100%) 1fr 2fr;
 		padding: 0;
 	}
 }
+
 @media (min-width: 1024px) {
 	.content {
 		grid-template-columns: 2fr 128px min(var(--content-width), 100%) 128px 2fr;
@@ -52,7 +38,7 @@ main, header, article {
 	}
 }
 
-/* Sometimes one layer in on content when using `display: contents` */
+/* Content layout */
 .content > *,
 .content > astro-island > *,
 .content > astro-slot > *,
@@ -132,7 +118,7 @@ FLOW
 }
 .flow :is(p, li) {
 	font-size: var(--size-0);
-	max-width: 80ch;
+	max-width: 120ch;  /* Increased from 80ch */
 }
 .flow :is(ol, ul) > li + li {
 	margin-top: var(--size-xs);
@@ -142,44 +128,119 @@ FLOW
 * PROSE 
 ***/
 
-/* Typography */
+/* Typography styles */
 .prose > * + * {
-	margin-top: var(--flow-space, --size-sm-md);
+	margin-top: var(--flow-space, var(--size-sm-md));
 }
 
-/* Text */
-.prose :where(p):not(:where([class~="not-prose"] *)) {
+.prose p {
 	font-size: var(--size-0);
-	max-width: 80ch;
+	max-width: 120ch;  /* Increased from 85ch */
 	line-height: 1.5;
+	color: var(--content-text);
 }
 
-/* Link */
-.prose :where(a):not(:where([class~="not-prose"] *)) {
-	@apply underline decoration-2 decoration-zinc-400 hover:decoration-zinc-500;
+.prose a {
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-decoration-color: var(--color-zinc-400);
+}
+
+.prose a:hover {
+	text-decoration-color: var(--color-zinc-500);
 }
 
 /* Headings */
-.prose :where(h1):not(:where([class~="not-prose"] *)) {
-	@apply text-size-2 font-bold;
-
-	--flow-space: var(--size-xl-2xl);
-	line-height: 1.1;
+.prose h1 {
+	font-size: var(--size-5, 3rem); /* Allow override from text-size-5 class */
+	color: var(--content-text);
 }
-.prose :where(h2):not(:where([class~="not-prose"] *)) {
-	@apply font-bold  text-size-1 border-b-[2px] border-dashed border-zinc-200 py-size-2xs;
 
-	--flow-space: var(--size-xl-2xl);
-	line-height: 1.1;
+.prose h1 {
+	font-size: inherit;
 }
-.prose :where(h3):not(:where([class~="not-prose"] *)) {
-	@apply text-size-0 italic border-b-[1px] border-dashed border-zinc-200 py-size-2xs;
 
-	--flow-space: var(--size-xl-2xl);
+.prose h2 {
+	font-size: var(--size-1);
+	font-weight: 700;
+	border-bottom: 2px dashed var(--color-zinc-200);
+	padding: var(--size-2xs) 0;
 	line-height: 1.1;
+	margin-top: var(--size-xl-2xl);
+	color: var(--content-text);
 }
+
+.prose h3 {
+	font-size: var(--size-0);
+	font-style: italic;
+	border-bottom: 1px dashed var(--color-zinc-200);
+	padding: var(--size-2xs) 0;
+	line-height: 1.1;
+	margin-top: var(--size-xl-2xl);
+	color: var(--content-text);
+}
+
 .prose > :is(h1, h2, h3) + p {
-	--flow-space: var(--size-md);
+	margin-top: var(--size-md);
+}
+
+/* Lists */
+.prose > :is(ol, ul) {
+	padding-left: 1ch;
+}
+
+.prose > :is(ol, ul) > li {
+	max-width: 120ch;  /* Increased from 85ch */
+	color: var(--content-text);
+}
+
+.prose ul {
+	list-style: disc inside;
+	padding-left: var(--size-3xs);
+}
+
+.prose ul li::marker {
+	color: var(--color-zinc-400);
+}
+
+@media (min-width: 1024px) {
+	.prose ul {
+		padding-left: 1.5555556em;
+	}
+}
+
+.prose ol {
+	list-style: decimal inside;
+}
+
+.prose ol li::marker {
+	color: var(--color-zinc-400);
+}
+
+.prose li {
+	font-size: var(--size-0);
+	font-style: normal;
+	max-width: 120ch;  /* Increased from 85ch */
+	color: var(--content-text);
+}
+
+.prose :is(ol, ul) > li + li {
+	margin-top: var(--size-xs);
+}
+
+.prose :is(ol, ul) > li > p {
+	display: inline;
+}
+
+/* Block elements */
+.prose blockquote {
+	border-left: 2px solid var(--color-zinc-200);
+	padding: var(--size-2xs) 0;
+	padding-left: calc(3ch - 2px);
+}
+
+.prose blockquote > p {
+	max-width: 120ch;  /* Increased from 85ch */
 }
 
 /* Katex */
@@ -198,43 +259,8 @@ FLOW
   font-size: 1.21em !important;
   padding-left: 1em !important;
   text-align: left !important;
-  @apply border-l-[2px] border-zinc-200
+  border-left: 2px solid var(--color-zinc-200);
 }
 .prose .katex-display + p {
   --flow-space: var(--size-sm);
-}
-
-
-/* Blockquote */
-.prose > :is(blockquote) {
-	@apply border-l-[2px] border-zinc-200 py-size-2xs;
-	padding-left: calc(3ch - 2px);
-}
-.prose > :is(blockquote) > p {
-	max-width: 72ch;
-}
-
-/* List */
-.prose > :is(ol, ul) {
-	padding-left: 1ch;
-}
-.prose > :is(ol, ul) > li {
-	max-width: 72ch;
-}
-.prose :where(ul):not(:where([class~="not-prose"] *)) {
-	@apply list-inside list-disc pl-size-3xs marker:text-zinc-400 lg:pl-[1.5555556em];
-}
-.prose :where(ol):not(:where([class~="not-prose"] *)) {
-	@apply list-inside list-decimal marker:text-zinc-400;
-}
-.prose :where(li):not(:where([class~="not-prose"] *)) {
-	font-size: var(--size-0);
-	font-style: norma;
-	max-width: 80ch;
-}
-.prose :where(:is(ol, ul) > li + li):not(:where([class~="not-prose"] *)) {
-	margin-top: var(--size-xs);
-}
-.prose :where(:is(ol, ul) > li > p):not(:where([class~="not-prose"] *)) {
-	display: inline;
 }

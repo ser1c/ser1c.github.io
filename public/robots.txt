@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://sabinsubedi.com/sitemap.xml
+
+# Allow all bots to access everything
+# Point to sitemap for better indexing

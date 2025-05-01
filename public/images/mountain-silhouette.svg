@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="200px" height="50px" viewBox="0 0 200 50" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <!-- Mountain silhouette inspired by Himalayan ranges -->
-  <g stroke="none" fill="none" fill-rule="evenodd">
-    <!-- Farthest range -->
-    <path d="M0,50 L15,30 L25,35 L40,25 L50,30 L65,20 L80,30 L95,15 L110,25 L125,15 L140,25 L155,18 L170,28 L185,20 L200,25 L200,50 Z" 
-          fill="#475569" opacity="0.3"></path>
-    
-    <!-- Middle range -->
-    <path d="M0,50 L20,35 L40,40 L60,25 L80,35 L100,22 L120,32 L140,22 L160,30 L180,20 L200,28 L200,50 Z" 
-          fill="#334155" opacity="0.4"></path>
-    
-    <!-- Closest range -->
-    <path d="M0,50 L30,40 L60,45 L90,33 L120,40 L150,30 L180,38 L200,32 L200,50 Z" 
-          fill="#1e293b" opacity="0.5"></path>
-    
-    <!-- Snow caps on peaks -->
-    <path d="M65,21 L65,19 L66,20 Z M95,16 L95,14 L96,15 Z M125,16 L125,14 L126,15 Z M155,19 L155,17 L156,18 Z M185,21 L185,19 L186,20 Z" 
-          fill="#f8fafc" opacity="0.7"></path>
-  </g>
+<svg width="800" height="200" viewBox="0 0 800 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#475569" fill-opacity="0.1">
+        <!-- Mount Everest inspired peak -->
+        <path d="M0 200 L150 20 L180 50 L220 10 L260 40 L300 0 L340 30 L380 15 L420 45 L460 25 L500 55 L540 35 L580 65 L620 40 L660 70 L700 45 L740 75 L800 50 L800 200 Z"/>
+        <!-- Additional detail layers -->
+        <path d="M0 200 L100 80 L140 100 L180 70 L220 90 L260 60 L300 80 L340 65 L380 85 L420 70 L460 90 L500 75 L540 95 L580 80 L620 100 L660 85 L700 105 L740 90 L800 110 L800 200 Z" fill-opacity="0.07"/>
+        <path d="M0 200 L50 140 L90 160 L130 130 L170 150 L210 120 L250 140 L290 125 L330 145 L370 130 L410 150 L450 135 L490 155 L530 140 L570 160 L610 145 L650 165 L690 150 L730 170 L800 155 L800 200 Z" fill-opacity="0.05"/>
+    </g>
 </svg>
