@@ -27,10 +27,62 @@ const { isHomePage = false } = Astro.props;
 
     <div class="flex items-center gap-size-2xs-xs">
       <ThemeToggle />
+      <button id="mobile-menu-button" class="md:hidden p-2 text-mountain-600 hover:text-dhaka-red" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path class="hamburger-top" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16"/>
+          <path class="hamburger-middle" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16"/>
+          <path class="hamburger-bottom" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18h16"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <div class="relative z-10">
+  <div id="mobile-menu" class="relative z-10 md:block hidden">
     <MenuItemsInline isHomePage={isHomePage} />
   </div>
 </nav>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  let isOpen = false;
+
+  mobileMenuButton?.addEventListener('click', () => {
+    isOpen = !isOpen;
+    if (mobileMenu) {
+      mobileMenu.classList.toggle('hidden');
+      // Animate hamburger icon
+      const top = mobileMenuButton.querySelector('.hamburger-top');
+      const middle = mobileMenuButton.querySelector('.hamburger-middle');
+      const bottom = mobileMenuButton.querySelector('.hamburger-bottom');
+      
+      if (isOpen) {
+        top?.classList.add('rotate-45', 'translate-y-2.5');
+        middle?.classList.add('opacity-0');
+        bottom?.classList.add('-rotate-45', '-translate-y-2.5');
+      } else {
+        top?.classList.remove('rotate-45', 'translate-y-2.5');
+        middle?.classList.remove('opacity-0');
+        bottom?.classList.remove('-rotate-45', '-translate-y-2.5');
+      }
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (isOpen && mobileMenu && !mobileMenu.contains(target) && !mobileMenuButton?.contains(target)) {
+      mobileMenu.classList.add('hidden');
+      isOpen = false;
+    }
+  });
+</script>
+
+<style>
+  .hamburger-top,
+  .hamburger-middle,
+  .hamburger-bottom {
+    transform-origin: center;
+    transition: all 0.3s ease;
+  }
+</style>

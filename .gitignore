@@ -2,6 +2,7 @@
 dist/
 .output/
 
+.DS_Store
 # dependencies
 node_modules/
 
