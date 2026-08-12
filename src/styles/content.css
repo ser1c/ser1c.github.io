@@ -8,7 +8,8 @@
   --content-bg: var(--color-mountain-900);
 }
 
-main, header, article {
+/* .content is included because Block renders a div, not a main. */
+main, header, article, .content {
 	--content-width: 120ch;  /* Increased from 85ch */
 }
 
@@ -72,12 +73,12 @@ main, header, article {
 	}
 }
 
+/* No border here: Figure.astro draws its own card around the image, and both
+   together produced a visible double frame. */
 .content > .figure {
 	width: 100%;
 	margin-top: var(--size-xl);
 	grid-column: 3 / 4;
-	border-width: 2px;
-	padding: var(--size-sm) var(--size-sm);
 	overflow-x: auto;
 }
 /* Negative margin on repeated wide-bleed */
@@ -168,6 +169,53 @@ FLOW
 	line-height: 1.1;
 	margin-top: var(--size-xl-2xl);
 	color: var(--content-text);
+}
+
+/***
+* SECTION LABEL
+*
+* One heading treatment for every section on a paper page, so that headings
+* authored in MDX (## Abstract) and headings written in the page template
+* (Key Findings, Presented at) look identical. Before this, the MDX ones
+* inherited .prose h2 at --size-1 bold near-black while the template ones were
+* muted small caps, leaving "Abstract" shouting over the paper's own title.
+***/
+
+.section-label,
+.paper-body h2 {
+	font-size: var(--size--2);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--mountain-slate);
+	border-bottom: 0;
+	padding: 0;
+	line-height: 1.2;
+	margin-top: 0;
+}
+
+/*
+  Only headings flowing inside the MDX body space themselves. The class is also
+  used on the <dt>s of the at-a-glance grid, where a top margin would push each
+  label to the bottom of its row and leave it sitting below its own value.
+*/
+.paper-body h2 {
+	margin-top: var(--size-lg);
+}
+
+.section-label::after,
+.paper-body h2::after {
+	content: none;
+}
+
+:root.dark .section-label,
+:root.dark .paper-body h2 {
+	color: #cbd5e1;
+}
+
+/* The first label in a block supplies its own spacing from the layout. */
+.paper-body > h2:first-child {
+	margin-top: 0;
 }
 
 .prose h3 {

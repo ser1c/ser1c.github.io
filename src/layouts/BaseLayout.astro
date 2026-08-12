@@ -11,6 +11,25 @@ import "../styles/global.css"
 import "../styles/nepal-theme.css"
 import "../styles/theme-modes.css"
 
+import { profileLinks, googleScholarUrl, cvUrl } from "../data/site"
+
+interface FooterLink {
+  name: string
+  url: string
+  external?: boolean
+}
+
+// Google Scholar only appears once a URL is set in src/data/site.ts.
+const footerLinks: FooterLink[] = [
+  { name: "Email", url: profileLinks.email },
+  ...(googleScholarUrl
+    ? [{ name: "Google Scholar", url: googleScholarUrl, external: true }]
+    : []),
+  { name: "GitHub", url: profileLinks.github, external: true },
+  { name: "LinkedIn", url: profileLinks.linkedin, external: true },
+  { name: "CV", url: cvUrl, external: true },
+]
+
 const {
   title = "Sabin Subedi - Applied Microeconomics & Development Economics",
   description = "Sabin Subedi - Applied Microeconomics & Development Economics",
@@ -63,12 +82,14 @@ const {
 			"@type": "Person",
 			"name": "Sabin Subedi",
 			"url": "https://sabinsubedi.com",
-			"image": "https://sabinsubedi.com/images/headshot_small.jpeg",
+			"image": "https://sabinsubedi.com/images/headshot.jpg",
 			"sameAs": [
-				"https://github.com/ser1c",
-				"https://substack.com/@sabinsubedi"
+				profileLinks.github,
+				profileLinks.substack,
+				profileLinks.linkedin,
+				...(googleScholarUrl ? [googleScholarUrl] : [])
 			],
-			"jobTitle": "PhD Student in Economics",
+			"jobTitle": "PhD Candidate in Economics",
 			"worksFor": {
 				"@type": "EducationalOrganization",
 				"name": "University of Strathclyde",
@@ -156,9 +177,23 @@ const {
 		</main>
 
 		<footer class="py-8 mt-12 nepal-footer relative z-10">
-			<div class="max-w-prose mx-auto text-center">
-				<p class="text-mountain-500 font-serif text-size--1">
-					© {new Date().getFullYear()} Sabin Subedi. The theme is inspired from Dhaka fabric from Nepal <span class="text-dhaka-red">♥</span> 
+			<div class="max-w-prose mx-auto px-size-xs text-center">
+				<ul class="flex flex-wrap items-center justify-center gap-x-size-xs gap-y-size-3xs text-size--1">
+					{footerLinks.map((link) => (
+						<li>
+							<a
+								href={link.url}
+								class="no-underline text-mountain-500 hover:text-dhaka-red dark:!text-mountain-300 dark:hover:!text-dhaka-red transition-colors"
+								target={link.external ? "_blank" : undefined}
+								rel={link.external ? "noopener noreferrer" : undefined}
+							>
+								{link.name}
+							</a>
+						</li>
+					))}
+				</ul>
+				<p class="mt-size-xs text-mountain-500 font-serif text-size--1">
+					© {new Date().getFullYear()} Sabin Subedi. The theme is inspired from Dhaka fabric from Nepal <span class="text-dhaka-red">♥</span>
 				</p>
 			</div>
 		</footer>

@@ -3,6 +3,7 @@ import { getCollection } from "astro:content"
 import Block from "../../components/Block.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
 import PaperInfo from "../../components/paper/PaperInfo.astro"
+import Button from "../../components/Button.astro"
 
 export async function getStaticPaths() {
 	const papers = await getCollection("papers")
@@ -14,6 +15,13 @@ export async function getStaticPaths() {
 
 const { paper } = Astro.props
 const { Content } = await paper.render()
+
+// At-a-glance strip: only the fields a given paper actually declares.
+const meta: { label: string; value: string }[] = [
+	{ label: "Design", value: paper.data.design },
+	{ label: "Data", value: paper.data.data },
+	{ label: "Setting", value: paper.data.setting },
+].filter((row): row is { label: string; value: string } => Boolean(row.value))
 
 // Generate SEO metadata
 const title = `${paper.data.title} | Sabin Subedi`
@@ -30,20 +38,75 @@ const description = paper.data.summary || "Research paper by Sabin Subedi"
     katex
 >
 	<Block>
-		<div class="flex items-center mb-6 relative z-10">
-			<a 
-				href="/papers" 
-				class="inline-flex items-center px-4 py-2 text-size--1 text-alice-500 border border-alice-500 rounded hover:bg-alice-500 hover:text-white transition-colors duration-200"
+		<div class="mb-size-sm relative z-10">
+			<a
+				href="/papers/"
+				class="no-underline text-size--1 text-mountain-500 hover:text-dhaka-blue dark:!text-mountain-300 dark:hover:!text-blue-400 transition-colors"
 			>
-				<span class="mr-2">←</span> Back to Papers
+				← Back to Papers
 			</a>
 		</div>
-		<div class="border-l-[2px] border-zinc-800 dark:border-zinc-200 px-4 py-2 relative z-10">
-			<PaperInfo data={paper.data} includeSummary noAnimation />
+
+		<div class="relative z-10">
+			<PaperInfo
+				data={paper.data}
+				includeSummary
+				noAnimation
+				titleTag="h1"
+				showLinks={false}
+			/>
 		</div>
+
+		{paper.data.links && paper.data.links.length > 0 && (
+			<div class="mt-size-sm flex flex-wrap gap-2 relative z-10">
+				{paper.data.links.map((link: { name: string; url: string }) => (
+					<Button href={link.url} external>
+						{link.name === "Paper" ? "Download PDF" : link.name}
+					</Button>
+				))}
+			</div>
+		)}
+
+		{meta.length > 0 && (
+			<dl class="mt-size-md grid grid-cols-1 gap-y-size-2xs md:grid-cols-[9rem_1fr] md:gap-x-size-sm border-t border-b border-mountain-200 dark:border-mountain-600 py-size-sm relative z-10">
+				{meta.map(({ label, value }) => (
+					<Fragment>
+						<dt class="section-label md:pt-[0.15em]">{label}</dt>
+						<dd class="text-size--1 text-mountain-600 dark:!text-mountain-100" set:html={value} />
+					</Fragment>
+				))}
+			</dl>
+		)}
+
+		{paper.data.findings && paper.data.findings.length > 0 && (
+			<section class="mt-size-md relative z-10">
+				<h2 class="section-label">Key Findings</h2>
+				<ul class="mt-size-xs flex flex-col gap-y-size-2xs">
+					{paper.data.findings.map((finding: string) => (
+						<li class="grid grid-cols-[1.1em_1fr] text-size-0 leading-relaxed text-mountain-600 dark:!text-mountain-100">
+							<span class="text-dhaka-red" aria-hidden="true">&bull;</span>
+							<span set:html={finding} />
+						</li>
+					))}
+				</ul>
+			</section>
+		)}
 	</Block>
-	<div class="mt-size-sm"></div>
-	<Block prose flow class="prose prose-zinc dark:prose-invert relative z-10">
+
+	<Block prose flow class="paper-body relative z-10">
 		<Content />
 	</Block>
+
+	{paper.data.presentations && paper.data.presentations.length > 0 && (
+		<Block>
+			<section class="relative z-10">
+				<h2 class="section-label">Presented at</h2>
+				<ul class="mt-size-xs flex flex-col gap-y-size-3xs text-size--1 text-mountain-600 dark:!text-mountain-100">
+					{paper.data.presentations.map((venue: string) => (
+						<li set:html={venue} />
+					))}
+				</ul>
+			</section>
+		</Block>
+	)}
 </BaseLayout>

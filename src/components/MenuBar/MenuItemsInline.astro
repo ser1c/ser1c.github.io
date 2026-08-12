@@ -7,12 +7,26 @@ interface Props {
 
 const { isHomePage = false } = Astro.props;
 
+import { cvUrl } from "../../data/site";
+
 const items = [
+  { name: "Home", link: "/" },
   { name: "Research", link: "/papers/" },
   { name: "Teaching", link: "/teaching/" },
+  { name: "CV", link: cvUrl, external: true },
   { name: "Blog", link: "/blog/" },
   { name: "Open Source Projects", link: "/open-source/" }
 ];
+
+// "/" is a prefix of every path, so the home link needs an exact match.
+// External items (the CV PDF) never mark themselves as the current page.
+const currentPath = Astro.url.pathname;
+const isCurrent = (item: { link: string; external?: boolean }) =>
+  item.external
+    ? false
+    : item.link === "/"
+      ? currentPath === "/"
+      : currentPath.startsWith(item.link);
 ---
 
 <div class="flex flex-col md:flex-row place-content-between text-size-0 font-light">
@@ -23,7 +37,9 @@ const items = [
           href={item.link}
           class="nav-link block px-4 py-2 md:px-2 md:py-1 rounded-sm hover:text-dhaka-red transition-all duration-300 relative overflow-hidden"
           role="menuitem"
-          aria-current={Astro.url.pathname.startsWith(item.link) ? 'page' : undefined}
+          target={item.external ? '_blank' : undefined}
+          rel={item.external ? 'noopener noreferrer' : undefined}
+          aria-current={isCurrent(item) ? 'page' : undefined}
         >
           <span class="relative z-10">{item.name}</span>
           <span class="absolute inset-0 bg-mountain-100 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-sm"></span>
@@ -66,5 +82,7 @@ const items = [
     li:nth-child(2) .nav-link { animation-delay: 0.2s; }
     li:nth-child(3) .nav-link { animation-delay: 0.3s; }
     li:nth-child(4) .nav-link { animation-delay: 0.4s; }
+    li:nth-child(5) .nav-link { animation-delay: 0.5s; }
+    li:nth-child(6) .nav-link { animation-delay: 0.6s; }
   }
 </style>

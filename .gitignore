@@ -32,3 +32,9 @@ pnpm-debug.log*
 .DS_Store
 .
 .DS_Store
+
+# embargoed / under-review drafts - never publish
+private-drafts/
+
+# temporary screenshots for design review
+review-screenshots/

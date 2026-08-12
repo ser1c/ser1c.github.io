@@ -16,6 +16,41 @@
   --dhaka-blue: #1e40af;
   --dhaka-gold: #eab308;
   --dhaka-green: #14532d;
+
+  /*
+    These stylesheets reference the palette as var(--color-*), which is the
+    Tailwind v4 naming convention. This project is on Tailwind v3, which does
+    not emit those custom properties, so every one of those references was
+    resolving to nothing and silently killing the rule that used it (dashed
+    heading rules, blockquote borders, the header border, hover accents, and
+    the whole --content-text colour system). Defining them here revives those
+    rules without having to rewrite every call site.
+    Values mirror tailwind.config.cjs.
+  */
+  --color-dhaka-red: #b91c1c;
+  --color-dhaka-red-dark: #7f1d1d;
+
+  --color-mountain-50: #f8fafc;
+  --color-mountain-100: #e2e8f0;
+  --color-mountain-600: #334155;
+  --color-mountain-700: #1e293b;
+  --color-mountain-800: #0f172a;
+  --color-mountain-900: #020617;
+
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-800: #27272a;
+
+  --color-border: #e2e8f0;
+  --color-fg-primary: #1e293b;
+  --color-th-bg: #f1f5f9;
+}
+
+:root.dark {
+  --color-border: #334155;
+  --color-fg-primary: #f8fafc;
+  --color-th-bg: #1e293b;
 }
 
 /* Mountain-inspired header */
@@ -255,8 +290,15 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 
-h1::after,
-h2::after {
+/*
+  The dhaka rule is reserved for the page's single h1 (the name on the
+  homepage, the paper title on a paper page). It used to be declared for every
+  h1 and h2 but never rendered, because var(--color-dhaka-red) was undefined.
+  Now that the variable resolves, applying it to every h2 as well would put a
+  red bar under every section heading on the site, which is far more colour
+  than the design calls for.
+*/
+h1::after {
   content: '';
   display: block;
   width: 2em;

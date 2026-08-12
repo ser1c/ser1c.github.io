@@ -1,37 +1,66 @@
 ---
-title: 'Adverse Selection in Subsidized Health Insurance: Evidence from Nepal’s Age-70 Threshold'
+title: 'Adverse Selection in (Un)Subsidised Health Insurance: Evidence from Nepal&rsquo;s Age-70 Threshold'
 links:
   - name: Paper
     url: /files/rdd_health.pdf
-  - name: Slides
-    url: /files/rdd_health.pdf
-date: "2026-01-31"
+date: "2026-08-12"
 categories:
-  - "Work in Progress"
+  - "Working Paper"
   - "Applied Microeconomics"
   - "Health Economics"
   - "Regression Discontinuity"
-status: 'Work in Progress'
-summary: "I evaluate the adverse selection in health insurance in Nepal exploting an age based discontinuity that provides free health insurance."
+status: 'Working Paper'
+jobMarketPaper: true
+summary: "Nepal waives health insurance premiums at age 70. I use that statutory waiver in a regression discontinuity design to produce the first quasi-experimental estimate of adverse selection in a national insurance scheme in a low- or middle-income country."
+design: "Regression discontinuity in age at enrolment"
+data: "Administrative claims records from Nepal's National Health Insurance Programme"
+setting: "Nepal"
+findings:
+  - "Coverage <strong>nearly doubles</strong> at the age-70 premium waiver, from 21.9 to 42.3 percent of the age-eligible population, and the waiver extends coverage into places that are poorer and farther from care."
+  - "Cost per enrollee <strong>falls across every claims margin</strong> at the threshold."
+  - "The marginal cost of the enrollees the zero price draws in sits <strong>significantly below the average cost</strong> of the paying pool, which is adverse selection into the paid programme."
+  - "Selection persisted while <strong>household bundling and restricted enrolment windows</strong>, the two remedies usually proposed against it, were both in force."
+presentations:
+  - "European Health Economics Association (EuHEA) Conference"
+  - "Global Health Seminar Series, Centre for Health Economics, University of York"
+  - "Health Economists' Study Group (HESG) Summer Conference"
+  - "Early Career Economics Seminar Series, Heriot-Watt University"
+  - "Strathclyde PGR Conference"
 ---
 import { Bg, Color, Figure, LinkBlock, LargeBlock } from "../../components/mdx/";
 
 ## Abstract
 
- Nepal made health insurance free for citizens over 70—and their claims fell. Using administrative
-data on 40 million claims from Nepal’s National Health Insurance Program and a regression
-discontinuity design, I find that claims per enrollee drop sharply at the eligibility threshold: the
-share with any claim falls by 12.2 percentage points, the number of claims decreases by 0.86 (33%),
-and total claimed amounts decline by NPR 1,604 (31%). This counterintuitive pattern reflects
-adverse selection. When insurance is costly, high-risk individuals are more likely to enroll; when
-it becomes free, lower-risk individuals join, shifting the pool toward healthier enrollees. To isolate
-selection from moral hazard, I construct an ex-ante expected healthcare utilization index using
-prior claims data. This index drops discontinuously at age 70, confirming that the composition
-of enrollees shifts toward healthier individuals when insurance is free. A placebo test using
-pre-policy data shows no such discontinuity, validating the research design. These findings
-demonstrate that adverse selection operates even with household-level bundling and enrollment
-timing restrictions—two policies often proposed to combat selection—suggesting that premium
-subsidies alone do not eliminate selection concerns in voluntary health insurance.
+A growing number of governments in low- and middle-income countries are building universal
+health coverage on contributory health insurance schemes. The mandate behind them is rarely
+enforced, so enrolment is voluntary in practice and enrollees sort on the premium. How strongly
+that price sorts them on risk determines what the pool costs to insure. This paper provides the
+first quasi-experimental estimate of adverse selection in a national scheme in a low- or middle-income
+country, using a statutory premium waiver at age 70 in Nepal's National Health Insurance
+Programme in a regression discontinuity in age at enrolment. Coverage nearly doubles at the
+threshold, while the waiver extends it into places that are poorer and farther from care. Cost per
+enrollee falls across every claims margin. Because enrolment itself responds to the price, these
+compare pools of differing composition rather than a fixed population's use of care. The marginal
+cost of the enrollees the zero price draws in is significantly below the average cost of the paying
+pool, which is adverse selection into the paid programme. The pool was adversely selected while
+both remedies proposed against selection in these markets, household bundling and restricted
+enrolment windows, were in force. These findings show that selection in these markets runs
+through the price, so remedies that leave the price alone cannot remove it.
 
-## Quick Summary
+<Figure
+  src="/images/papers/rdd-claims-discontinuity.png"
+  alt="Claims fall discontinuously at the age-70 threshold. Panel A shows the probability of any claim; Panel B shows total amount claimed, in NPR, against days from the 70th birthday."
+  width={1600}
+  height={630}
+/>
 
+<Figure
+  src="/images/papers/rdd-average-marginal-cost.png"
+  alt="The marginal cost of the enrollees drawn in by the zero price lies below the average cost of the paying pool, across the coverage margin induced at age 70."
+  width={1200}
+  height={800}
+/>
+
+**Keywords:** Adverse Selection, Health Insurance, Regression Discontinuity, Nepal
+
+**JEL Classification:** D82, G22, H51, I13, I18, O15

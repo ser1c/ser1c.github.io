@@ -5,6 +5,26 @@ const courses = await getCollection("courses")
 ---
 
 <Layout>
+  <h1 class="sr-only">Teaching</h1>
+  <section class="prose mb-size-lg">
+    <p class="text-size-0">
+      I am an <strong>Associate Fellow of the Higher Education Academy (AFHEA)</strong>
+      and was shortlisted for the University of Strathclyde
+      <strong>Teaching Excellence Award</strong> in 2023.
+    </p>
+    <p class="text-size-0">
+      Since November 2024 I have been a <strong>Teaching Fellow</strong> on the
+      Health Progress Hub Global Health Fellowship, where I designed a curriculum
+      from scratch and deliver training on quantitative methods and evidence-based
+      policymaking for early-career researchers and health practitioners without an
+      economics background, working in low- and middle-income country settings.
+    </p>
+  </section>
+
+  <h2 class="text-zinc-700 dark:text-zinc-300 text-size-1 border-b-2 border-dashed border-zinc-200 dark:border-zinc-700 py-size-2xs mb-size-md">
+    Courses
+  </h2>
+
   <ol class="flex flex-col gap-y-size-lg">
 		{
 			courses.map((course, i) => {
@@ -15,7 +35,13 @@ const courses = await getCollection("courses")
               <h2 class="font-zinc-800 hover:font-zinc-50 cursor-pointer font-bold text-size-0">
                 {/* TODO: Find external link svg */}
                 <svg class="inline-block text-kelly-500 dark:text-kelly-400 h-4 w-4 -mt-[0.25em] lg:h-5 lg:w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g fill="currentColor"><path d="m209.94 113.94l-28 28a47.76 47.76 0 0 1-26.52 13.48a47.76 47.76 0 0 1-13.48 26.52l-28 28a48 48 0 0 1-67.88-67.88l28-28a47.76 47.76 0 0 1 26.52-13.48a47.76 47.76 0 0 1 13.48-26.52l28-28a48 48 0 0 1 67.88 67.88Z" opacity=".2"/><path d="M137.54 186.36a8 8 0 0 1 0 11.31l-17.94 18a56 56 0 0 1-79.22-79.27l28.12-28.11a56 56 0 0 1 76.81-2.29a8 8 0 1 1-10.64 12a40 40 0 0 0-54.85 1.63L51.7 147.72a40 40 0 1 0 56.58 56.58l17.94-17.94a8 8 0 0 1 11.32 0Zm78.08-146a56.08 56.08 0 0 0-79.22 0l-17.94 17.97a8 8 0 0 0 11.32 11.31l17.94-17.94a40 40 0 0 1 56.58 56.58l-28.12 28.12a40 40 0 0 1-54.85 1.6a8 8 0 1 0-10.64 12a56 56 0 0 0 76.81-2.27l28.12-28.11a56.08 56.08 0 0 0 0-79.24Z"/></g></svg>
-                <a class="underline decoration-zinc-300" set:html={course.data.title} />
+                <a
+                  href={course.data.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="no-underline underline decoration-mountain-300 underline-offset-4 hover:decoration-dhaka-blue hover:text-dhaka-blue dark:hover:!text-blue-400 transition-colors"
+                  set:html={course.data.title}
+                />
               </h2>
 
 							<p

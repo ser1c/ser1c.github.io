@@ -1,0 +1,41 @@
+---
+/**
+ * Shared call-to-action button.
+ *
+ * One restrained outline style for every action, picking up dhaka-blue on
+ * hover. The `no-underline` class is deliberate: nepal-theme.css gives every
+ * anchor a dhaka-yellow bottom border unless its class list contains
+ * "no-underline". The `!` colour overrides are also required, because
+ * theme-modes.css sets `.dark a` to a blue that would otherwise win.
+ */
+interface Props {
+	href: string
+	external?: boolean
+	class?: string
+}
+
+const { href, external = false, class: extraClass = "" } = Astro.props
+
+const styles = [
+	"no-underline inline-flex items-center justify-center gap-2",
+	"rounded-md border px-4 py-2 text-size--1 font-medium",
+	"transition-colors duration-200",
+	"border-mountain-300 !text-mountain-600",
+	// Hover fills the whole box so the feedback is unmistakable.
+	"hover:bg-dhaka-blue hover:border-dhaka-blue hover:!text-white",
+	// dhaka-blue is very dark, so the dark theme lifts to a brighter blue
+	// to keep the filled state from disappearing into the background.
+	"dark:border-mountain-500 dark:!text-mountain-200",
+	"dark:hover:bg-blue-600 dark:hover:border-blue-600 dark:hover:!text-white",
+	"focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dhaka-blue",
+].join(" ")
+---
+
+<a
+	href={href}
+	class={`${styles} ${extraClass}`}
+	target={external ? "_blank" : undefined}
+	rel={external ? "noopener noreferrer" : undefined}
+>
+	<slot />
+</a>

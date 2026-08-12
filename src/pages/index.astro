@@ -1,55 +1,226 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import {Content as About} from '../components/md/about.md';
 import SocialItems from "../components/MenuBar/SocialItems.astro";
+import Button from "../components/Button.astro";
+import PaperInfo from "../components/paper/PaperInfo.astro";
+import { getCollection } from "astro:content";
+import { googleScholarUrl, cvUrl, affiliation, email } from "../data/site";
+
+const researchInterests = [
+  "Health Economics",
+  "Health Insurance & Financing",
+  "Applied Microeconomics",
+  "Development Economics",
+  "Migration & Remittances",
+];
+
+// Inline prose links read as blue and underlined at rest so they are obviously
+// clickable. "no-underline" opts out of the global dhaka-yellow border in
+// nepal-theme.css so the underline below is the only one drawn, and the colour
+// needs "!" to beat the `.dark a` rule in theme-modes.css.
+// font-bold (700) rather than semibold: Libertine only ships Regular and Bold,
+// so an intermediate weight would be synthesised by the browser.
+const inlineLink =
+  "no-underline font-bold underline underline-offset-4 decoration-1 !text-blue-900 decoration-blue-900/60 hover:decoration-blue-900 dark:!text-blue-300 dark:decoration-blue-300/60 dark:hover:decoration-blue-300 transition-colors";
+
+const supervisors = [
+  { name: "Dr. Markus Gehrsitz", url: "https://www.strath.ac.uk/staff/gehrsitzmarkusmr/" },
+  { name: "Prof. Stuart McIntyre", url: "https://www.strath.ac.uk/staff/mcintyrestuartprofessor/" },
+];
+
+const afheaUrl = "https://www.advance-he.ac.uk/fellowship/";
+
+// The job market paper is whichever entry flags itself as such in its status,
+// so the homepage stays in sync with the papers collection.
+const papers = await getCollection("papers");
+const jmp = papers.find((p) => p.data.jobMarketPaper);
+// Everything except the job market paper, which has its own section above.
+// Running order is set by hand rather than by date. Any paper not named here
+// is appended newest first, so adding one still shows up without a code change.
+const homepageOrder = [
+  "health_insurance",
+  "remittances",
+  "fiscal_sustainability",
+];
+const rank = (slug: string) => {
+  const i = homepageOrder.indexOf(slug);
+  return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+};
+
+const otherPapers = papers
+  .filter((p) => p.slug !== jmp?.slug)
+  .sort(
+    (a, b) =>
+      rank(a.slug) - rank(b.slug) ||
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
 ---
 
 <Layout>
-  <main>
-
-
-    <!-- Photo and About with Nepal-inspired styling -->
-<article
-class="flex flex-col gap-y-size-md md:gap-y-0 md:flex-row md:gap-x-size-md"
->
-<div class="max-w-[14rem] lg:max-w-[18rem] mx-auto flex flex-col">
-  <div class="aspect-square overflow-hidden rounded-full shadow-md">
-    <img
-      src="/images/headshot_small.jpeg"
-      alt="Headshot of Sabin Subedi"
-      class="w-full h-full object-cover"
-    />
-  </div>
-  <!-- Social links below photo with additional gap/margin -->
-  <div class="mt-4">
-    <SocialItems variant="profile" />
-  </div>
-</div>
-
-<div class="prose flow">
-  <h1 class="text-size-5 !text-size-5 font-bold !text-black dark:!text-white">
-    Sabin Subedi
-  </h1>
-  <About></About>
-  <a
-    href="/files/CV.pdf"
-    class="inline-block mt-6 px-5 py-2.5 bg-kelly-500 text-white font-semibold rounded-md hover:bg-kelly-600 transition-colors duration-200"
+  <article
+    class="flex flex-col gap-y-size-sm md:flex-row md:gap-x-size-md md:gap-y-0"
   >
-    Download CV →
-  </a>
-</div>
-</article>
+    <div class="flex flex-col shrink-0 md:w-[13rem] lg:w-[16rem]">
+      {/* Photo keeps its own width cap so the column can be wider than it. */}
+      <div class="w-full max-w-[11rem] md:max-w-none mx-auto">
+        <div class="aspect-square overflow-hidden rounded-md">
+          <img
+            src="/images/headshot.jpg"
+            alt="Headshot of Sabin Subedi"
+            class="w-full h-full object-cover"
+            width="800"
+            height="800"
+          />
+        </div>
+        <div class="mt-4">
+          <SocialItems variant="profile" />
+        </div>
+      </div>
 
-<!-- Open to Opportunities Section -->
-<section class="mt-size-lg pt-size-md border-t border-zinc-200 dark:border-zinc-700">
-  <div class="prose">
-    <h2 class="text-size-1 font-bold text-kelly-600 dark:text-kelly-400">👋 Open to Opportunities</h2>
-    <p class="text-size--1">I'm currently on the job market and open to conversations about postdoctoral positions, faculty roles, and policy-oriented research positions in development and health economics.</p>
-    <p class="text-size--1 text-zinc-600 dark:text-zinc-400">
-      <strong>Get in touch:</strong> <a href="mailto:sabinsubedi.subedi@gmail.com">sabinsubedi.subedi@gmail.com</a>
-      · <a href="https://www.linkedin.com/in/sabin-subedi-007575134/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      · <a href="https://github.com/ser1c" target="_blank" rel="noopener noreferrer">GitHub</a>
-      · <a href="https://substack.com/@sabinsubedi" target="_blank" rel="noopener noreferrer">Substack</a>
-    </p>
-  </div>
-</section>
+      {/* Boxed so the left rail reads as a filled column rather than a photo
+          with text trailing off underneath it. Uses the same section-label
+          treatment as the paper pages. */}
+      <div
+        class="mt-size-sm md:grow md:flex md:flex-col rounded-md border border-mountain-200 bg-white/70 px-size-xs py-size-xs text-center md:text-left dark:border-mountain-600 dark:bg-mountain-800/40"
+      >
+        <h2 class="section-label">Research Interests</h2>
+        {/* The list absorbs the box's extra height rather than leaving it
+            hollow at the bottom: gap-y is the minimum spacing, and any space
+            left over is distributed evenly between the entries. */}
+        <ul
+          class="mt-size-xs flex flex-col gap-y-size-2xs md:grow md:justify-between text-size--1 leading-snug text-mountain-600 dark:!text-mountain-100"
+        >
+          {researchInterests.map((interest) => <li>{interest}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="min-w-0">
+      <h1
+        class="text-size-4 !text-size-4 font-bold !text-black dark:!text-white !mt-0"
+      >
+        Sabin Subedi
+      </h1>
+      <p class="mt-size-2xs text-size-0 italic text-mountain-500 dark:text-mountain-300">
+        PhD Candidate in Economics
+      </p>
+      <p class="text-size-0 font-bold">
+        <a
+          href={affiliation.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="no-underline hover:text-dhaka-blue dark:hover:!text-blue-400 transition-colors"
+          >{affiliation.name}</a
+        >
+      </p>
+
+      {/* Everything below the affiliation shares one size; hierarchy comes
+          from weight and colour rather than scale. */}
+      <p class="mt-size-xs text-size-0 leading-relaxed text-mountain-500 dark:text-mountain-200">
+        I am submitting my PhD at the {affiliation.name} in September 2026,
+        supervised by <a
+          href={supervisors[0].url}
+          class={inlineLink}
+          target="_blank"
+          rel="noopener noreferrer">{supervisors[0].name}</a
+        > and <a
+          href={supervisors[1].url}
+          class={inlineLink}
+          target="_blank"
+          rel="noopener noreferrer">{supervisors[1].name}</a
+        >. My doctoral research addresses selection and healthcare utilisation in
+        Nepal's National Health Insurance Programme, and the role of remittances
+        after a natural disaster.
+      </p>
+
+      <p class="mt-size-2xs text-size-0 leading-relaxed text-mountain-500 dark:text-mountain-200">
+        I have extensive teaching experience across undergraduate and
+        postgraduate economics, and I am an Associate Fellow of the Higher
+        Education Academy (<a
+          href={afheaUrl}
+          class={inlineLink}
+          target="_blank"
+          rel="noopener noreferrer">AFHEA</a
+        >).
+      </p>
+
+      {/* Availability is the one line a visiting PI or recruiter scans for, so
+          it gets the page's only tinted callout. The box carries the emphasis,
+          which is why the text inside is not additionally bolded. */}
+      <p
+        class="mt-size-sm rounded-md border border-dhaka-yellow/60 bg-dhaka-yellow/[0.09] px-size-xs py-size-2xs text-size-0 leading-relaxed text-mountain-700 dark:border-dhaka-gold/60 dark:bg-dhaka-gold/[0.12] dark:!text-mountain-50"
+      >
+        I am seeking postdoctoral, teaching, policy, and industry research
+        positions in economics, beginning September 2026.
+      </p>
+
+      <p class="mt-size-2xs text-size-0 leading-relaxed text-mountain-500 dark:text-mountain-200">
+        Please refer to my <a
+          href={cvUrl}
+          class={inlineLink}
+          target="_blank"
+          rel="noopener noreferrer">CV</a
+        >{
+          googleScholarUrl && (
+            <Fragment>
+              {" "}or my{" "}
+              <a
+                href={googleScholarUrl}
+                class={inlineLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google Scholar profile
+              </a>
+            </Fragment>
+          )
+        } for further details. For enquiries or collaboration, email <a
+          href={`mailto:${email}`}
+          class={inlineLink}>{email}</a
+        >.
+      </p>
+    </div>
+  </article>
+
+  {
+    jmp && (
+      <section class="mt-size-lg">
+        <h2 class="!mt-0 text-size-1 font-bold text-mountain-700 dark:text-mountain-100">
+          Job Market Paper
+        </h2>
+        {/* The yellow rule is what marks this out from the list below, so it
+            stays. The entry itself uses the shared component, so its title,
+            status and Details | Paper links match the other papers. */}
+        <div class="mt-size-sm border-l-2 border-dhaka-yellow pl-size-xs">
+          <PaperInfo
+            data={jmp.data}
+            slug={jmp.slug}
+            includeSummary
+            noAnimation
+            showJmpLabel={false}
+          />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    otherPapers.length > 0 && (
+      <section class="mt-size-lg">
+        <h2 class="!mt-0 text-size-1 font-bold text-mountain-700 dark:text-mountain-100">
+          Other Papers
+        </h2>
+        <ol class="mt-size-sm flex flex-col gap-y-size-sm">
+          {otherPapers.map((paper) => (
+            <li>
+              <PaperInfo data={paper.data} slug={paper.slug} noAnimation />
+            </li>
+          ))}
+        </ol>
+        <div class="mt-size-sm">
+          <Button href="/papers/">→ View all research</Button>
+        </div>
+      </section>
+    )
+  }
+</Layout>

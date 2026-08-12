@@ -1,8 +1,17 @@
 ---
 import "../styles/content.css"
-const { flow = false, prose = false } = Astro.props
+
+/*
+  Renders a div rather than a main: BaseLayout already wraps the page slot in
+  <main>, and pages call Block more than once, so this used to emit several
+  nested <main> elements per document.
+
+  The class prop is passed through; it used to be dropped silently, so classes
+  set on <Block class="..."> never reached the DOM.
+*/
+const { flow = false, prose = false, class: className = "" } = Astro.props
 ---
 
-<main class:list={[ 'content', {'flow': flow}, {'prose': prose} ]}>
+<div class:list={['content', { flow }, { prose }, className]}>
   <slot />
-</main>
+</div>

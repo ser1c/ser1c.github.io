@@ -4,44 +4,53 @@ author:
   - name: "Prakash Pathak"
     url: https://sites.google.com/view/prakashpathak
     affiliation: University of Strathclyde
-    affiliation_url: 
+    affiliation_url:
   - name: "Agnese Romiti"
     url: https://sites.google.com/view/agneseromiti/home
     affiliation: University of Strathclyde
-    affiliation_url: 
+    affiliation_url:
 
 links:
   - name: Paper
     url: /files/remittances.pdf
-  - name: Slides
-    url: /files/ppt_remittances.pdf
-date: "2025-04-29"
+date: "2026-08-01"
 categories:
-  - "Work in Progress"
+  - "Working Paper"
   - "Applied Microeconomics"
   - "Development Economics"
   - "Difference-in-Differences"
   - "Instrumental Variable"
-status: 'Work in Progress'
-summary: "Exploiting the earthquake and exogeniety of exchange rate in Nepal, I evaluate the impact of remittances on farm productivity after a natural disaster."
+status: 'Working Paper &middot; Corresponding author'
+summary: "Combining spatial variation in 2015 Nepal earthquake intensity with exchange-rate-induced remittance variation in a triple-difference IV design, we find that higher remittance inflows crowded out household production in the short run."
+design: "Triple-difference instrumental variables"
+data: "Pre- and post-earthquake household survey data, earthquake intensity, and exchange-rate-induced remittance variation"
+setting: "Nepal, around the 2015 earthquake"
+findings:
+  - "Higher remittance inflows in high-intensity earthquake areas <strong>reduced household production</strong> in the short run."
+  - "Total consumption fell by <strong>an order of magnitude less</strong>, so remittances appear to crowd out household production rather than income."
+  - "Households adjust through <strong>lower capital inputs, lower agricultural labour</strong>, and lower production in relatively capital-intensive activities."
+  - "No evidence that public assistance moves with remittance inflows, so the adjustment does not run through substitution between private and public transfers."
 ---
 import { Bg, Color, Figure, LinkBlock, LargeBlock } from "../../components/mdx/";
 
 ## Abstract
 
-This study investigates the impact of remittances on farm productivity in the aftermath of the 2015 Nepal 
-earthquake, addressing a critical gap in our understanding of how private financial flows affect economic outcomes
-     during times of crisis. Employing a triple difference strategy and using exchange rates as an instrument for 
-     remittances, we find that a 10\% increase in remittances leads to a 1.5\% decrease in farm productivity 
-     for earthquake-affected households. This effect is pronounced in the short term but dissipates by the third 
-     year post-earthquake. Our analysis reveals that remittance-receiving households prioritize immediate recovery 
-     needs over agricultural investments, suggesting a trade-off between short-term disaster relief and maintaining 
-     productivity in key economic sectors. The study utilizes comprehensive household survey data, and rigorous 
-     econometric techniques to establish causality. Our findings 
-     have important implications for policymakers in remittance-dependent countries prone to natural disasters, 
-     highlighting the need for integrated approaches that leverage remittances for immediate relief while supporting
-      agricultural productivity.
+We study how remittance responses to a large natural disaster affect household production.
+We combine pre- and post-earthquake household survey data from Nepal with spatial variation
+in earthquake intensity and exchange-rate-induced remittance variation in a triple-difference
+instrumental-variables design. We find that higher remittance inflows in high-intensity earthquake
+areas reduced household production in the short run, while total consumption fell by an order of
+magnitude less. In this sense, remittances appear to crowd out household production. Households
+adjust primarily through lower capital inputs, lower agricultural labor, and lower production in
+relatively capital-intensive activities. We find no evidence that public assistance moves with
+remittance inflows, so the adjustment does not appear to run through substitution between private
+and public transfers. From a policy perspective, our results suggest that remittances may have
+helped households cope with large shocks, but they may also reduce the need to maintain production
+when other post-disaster needs become more pressing.
 
-
-
-
+<Figure
+  src="/images/papers/remittances-cropland-event-study.png"
+  alt="Effect on log cropland area by year, interacting earthquake intensity with the migration shift-share. Estimates are flat before the 2015 earthquake and turn negative afterwards."
+  width={1600}
+  height={960}
+/>

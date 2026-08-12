@@ -12,22 +12,29 @@ const { src, alt, width, height } = Astro.props;
 const isSvg = src.endsWith(".svg");
 ---
 
-<figure class="not-prose figure border-zinc-200 border-2">
-  {isSvg ? (
-    <object data={src} type="image/svg+xml" class="w-full"></object>
-  ) : (
-    <Image 
-      src={src}
-      alt={alt}
-      width={width || 800}
-      height={height || 600}
-      class="w-full"
-      loading="lazy"
-      format="webp"
-      quality={80}
-    />
-  )}
-  <figcaption class="text-xl mt-size-2xs">
-    <b>Figure:</b> {alt}
+{/*
+  Plots are exported on a white canvas, so the image sits on an explicit white
+  card. Without it the figure reads as a bright rectangle punched into the page
+  in dark mode; with it, it reads as a deliberate panel in both themes.
+*/}
+<figure class="not-prose figure my-size-md">
+  <div class="rounded-md border border-mountain-200 dark:border-mountain-600 bg-white p-size-2xs">
+    {isSvg ? (
+      <object data={src} type="image/svg+xml" class="w-full"></object>
+    ) : (
+      <Image
+        src={src}
+        alt={alt}
+        width={width || 1600}
+        height={height || 900}
+        class="w-full h-auto"
+        loading="lazy"
+        format="webp"
+        quality={80}
+      />
+    )}
+  </div>
+  <figcaption class="mt-size-2xs text-size--1 leading-snug text-mountain-500 dark:text-mountain-300">
+    {alt}
   </figcaption>
 </figure>

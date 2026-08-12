@@ -6,30 +6,32 @@ interface SocialLink {
   ariaLabel: string;
 }
 
+import { profileLinks } from '../../data/site';
+
 const socialLinks: SocialLink[] = [
   {
     platform: 'twitter',
-    url: 'https://x.com/realsabinsubedi',
+    url: profileLinks.twitter,
     ariaLabel: "Sabin Subedi's Twitter/X Account"
   },
   {
     platform: 'github',
-    url: 'https://github.com/ser1c',
+    url: profileLinks.github,
     ariaLabel: "Sabin Subedi's GitHub Account"
   },
   {
     platform: 'linkedin',
-    url: 'https://www.linkedin.com/in/sabin-subedi-007575134/', 
+    url: profileLinks.linkedin,
     ariaLabel: "Sabin Subedi's LinkedIn Profile"
   },
   {
     platform: 'substack',
-    url: 'https://substack.com/@sabinsubedi', // Replace with your actual Substack URL
+    url: profileLinks.substack,
     ariaLabel: "Sabin Subedi's Substack Newsletter"
   },
   {
     platform: 'email',
-    url: 'mailto:sabinsubedi.subedi@gmail.com',
+    url: profileLinks.email,
     ariaLabel: "Send an email to Sabin Subedi"
   }
 ];
