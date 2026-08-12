@@ -21,6 +21,9 @@ export const profileLinks = {
 	email: `mailto:${email}`,
 }
 
+// Advance HE Associate Fellowship certificate, awarded 5 August 2026.
+export const afheaUrl = "/files/afhea_certificate.pdf"
+
 export const affiliation = {
 	name: "University of Strathclyde",
 	url: "https://www.strath.ac.uk/business/economics/",

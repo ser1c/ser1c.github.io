@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro"
 import { getCollection } from "astro:content"
+import { afheaUrl } from "../../data/site"
 const courses = await getCollection("courses")
 ---
 
@@ -8,8 +9,12 @@ const courses = await getCollection("courses")
   <h1 class="sr-only">Teaching</h1>
   <section class="prose mb-size-lg">
     <p class="text-size-0">
-      I am an <strong>Associate Fellow of the Higher Education Academy (AFHEA)</strong>
-      and was shortlisted for the University of Strathclyde
+      I am an Associate Fellow of the Higher Education Academy (<a
+        href={afheaUrl}
+        class="inline-link"
+        target="_blank"
+        rel="noopener noreferrer">AFHEA</a
+      >) and was shortlisted for the University of Strathclyde
       <strong>Teaching Excellence Award</strong> in 2023.
     </p>
     <p class="text-size-0">

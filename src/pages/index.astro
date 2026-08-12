@@ -4,7 +4,13 @@ import SocialItems from "../components/MenuBar/SocialItems.astro";
 import Button from "../components/Button.astro";
 import PaperInfo from "../components/paper/PaperInfo.astro";
 import { getCollection } from "astro:content";
-import { googleScholarUrl, cvUrl, affiliation, email } from "../data/site";
+import {
+  googleScholarUrl,
+  cvUrl,
+  affiliation,
+  email,
+  afheaUrl,
+} from "../data/site";
 
 const researchInterests = [
   "Health Economics",
@@ -14,23 +20,14 @@ const researchInterests = [
   "Migration & Remittances",
 ];
 
-// Inline prose links read as blue and underlined at rest so they are obviously
-// clickable. "no-underline" opts out of the global dhaka-yellow border in
-// nepal-theme.css so the underline below is the only one drawn, and the colour
-// needs "!" to beat the `.dark a` rule in theme-modes.css.
-// font-bold (700) rather than semibold: Libertine only ships Regular and Bold,
-// so an intermediate weight would be synthesised by the browser.
-const inlineLink =
-  "no-underline font-bold underline underline-offset-4 decoration-1 !text-blue-900 decoration-blue-900/60 hover:decoration-blue-900 dark:!text-blue-300 dark:decoration-blue-300/60 dark:hover:decoration-blue-300 transition-colors";
+// Styled by .inline-link in content.css, so prose links look the same here and
+// on the teaching page and cannot drift apart.
+const inlineLink = "inline-link";
 
 const supervisors = [
   { name: "Dr. Markus Gehrsitz", url: "https://www.strath.ac.uk/staff/gehrsitzmarkusmr/" },
   { name: "Prof. Stuart McIntyre", url: "https://www.strath.ac.uk/staff/mcintyrestuartprofessor/" },
 ];
-
-// Advance HE certificate, awarded 5 August 2026 (ref PR352178). Previously
-// pointed at Advance HE's generic fellowship page as a stand-in.
-const afheaUrl = "/files/afhea_certificate.pdf";
 
 // The job market paper is whichever entry flags itself as such in its status,
 // so the homepage stays in sync with the papers collection.

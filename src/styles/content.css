@@ -172,6 +172,43 @@ FLOW
 }
 
 /***
+* INLINE LINK
+*
+* Bold, blue and underlined so links inside running prose are obviously
+* clickable. Defined once here rather than as a repeated Tailwind string so
+* the homepage and the teaching page cannot drift apart.
+*
+* The !important declarations are not decorative: nepal-theme.css puts a
+* dhaka-yellow border-bottom on `a:not(.nav-link):not([class*="no-underline"])`
+* and theme-modes.css sets `.dark a { color: #60a5fa }`, both with selectors
+* that outrank a single class.
+***/
+
+.inline-link {
+	font-weight: 700;
+	color: #1e3a8a !important;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-decoration-color: rgb(30 58 138 / 0.6);
+	text-underline-offset: 4px;
+	border-bottom: 0 !important;
+	transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.inline-link:hover {
+	text-decoration-color: #1e3a8a;
+}
+
+:root.dark .inline-link {
+	color: #93c5fd !important;
+	text-decoration-color: rgb(147 197 253 / 0.6);
+}
+
+:root.dark .inline-link:hover {
+	text-decoration-color: #93c5fd;
+}
+
+/***
 * SECTION LABEL
 *
 * One heading treatment for every section on a paper page, so that headings
