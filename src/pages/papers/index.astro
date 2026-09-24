@@ -5,6 +5,21 @@ import { getCollection } from "astro:content"
 
 let papers_unsorted = await getCollection("papers")
 
+// Running order is set by hand rather than by category rank or date, so the
+// list leads with the job market paper regardless of where each paper sits in
+// the submission pipeline. This mirrors the homepage, which orders its own
+// list the same way. Any paper not named here falls to the end, newest first.
+const manualOrder = [
+	"health_insurance_age",
+	"health_insurance",
+	"fiscal_sustainability",
+	"remittances",
+];
+const rank = (slug: string) => {
+	const i = manualOrder.indexOf(slug);
+	return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+};
+
 let papers = papers_unsorted
 	.map((paper) => {
 		const categoryOrder = {
@@ -20,6 +35,8 @@ let papers = papers_unsorted
 		return paper;
 	})
 	.sort((a, b) => {
+		const byHand = rank(a.slug) - rank(b.slug);
+		if (byHand !== 0) return byHand;
 		if (a.data.order === b.data.order) {
 			return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 		}
